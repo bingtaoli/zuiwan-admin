@@ -177,7 +177,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 	$scope.uploadPic = function(file){
 		var content = window.editor.getData();
     	file.upload = Upload.upload({
-	      	url: 'http://localhost/zuiwan-backend/index.php/article/add_article',
+	      	url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
 	      	data: { 
 	      		file: file,
 	      		article_title: $scope.article_title,
@@ -224,7 +224,7 @@ zuiwanControllers.controller('AddMediaCtrl', ['$scope', '$http', 'Upload', '$tim
 function($scope, $http, Upload, $timeout){
 	$scope.addMedia = function(){
     	file.upload = Upload.upload({
-	      	url: 'http://localhost/zuiwan-backend/index.php/article/add_article',
+	      	url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
 	      	data: { 
 	      		file: file,
 
