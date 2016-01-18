@@ -1,0 +1,58 @@
+<div style="padding: 10px;">
+    <a href="#/topics" id="back">&lt;&lt;返回所有专题</a>
+    <form enctype="multipart/form-data" class="form-horizontal" name="myForm">
+        <section class="panel panel-default">
+            <header class="panel-heading">新增专题</header>
+            <div class="panel-body">
+                <div class="form-group pull-in clearfix">
+                    <div class="col-sm-6">
+                        <label>专题名称<i ng-show="myForm.topic_name.$error.required">*required</i></label>
+                        <input required name="topic_name" ng-model="topic_name" type="text" class="form-control parsley-validated">
+                    </div>
+                    <div class="col-sm-6">
+                        <label>专题简介<i ng-show="myForm.topic_intro.$error.required">*required</i></label>
+                        <input required name="topic_intro" ng-model="topic_intro" type="text" class="form-control parsley-validated">
+                    </div>
+                </div>   
+                <div class="line line-dashed line-lg pull-in"></div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label>专题大图<i ng-show="myForm.topic_img.$error.required">*required</i></label>
+                        <input type="file" required ngf-select ng-model="imgFile" name="topic_img" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <i ng-show="myForm.topic_img.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="myForm.topic_img.$valid" ngf-thumbnail="imgFile" class="thumb">
+                        <div>
+                            <button ng-click="imgFile = null" ng-show="imgFile" class="btn btn-default" style="padding: 2px 4px; font-size=12px; margin-top: 8px;">Remove</button>
+                        </div>
+                        <span class="progress" ng-show="imgFile.progress >= 0">
+                            <div style="width:{{imgFile.progress}}%" ng-bind="imgFile.progress + '%'"></div>
+                        </span>
+                        <span ng-show="imgFile.result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </div>
+                </div>
+                <div class="line line-dashed line-lg pull-in"></div>
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <label>专题detail背景<i ng-show="myForm.detail.$error.required">*required</i></label>
+                        <input type="file" required ngf-select ng-model="detailFile" name="detail" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <i ng-show="myForm.detail.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="myForm.detail.$valid" ngf-thumbnail="detailFile" class="thumb">
+                        <div>
+                            <button ng-click="detailFile = null" ng-show="detailFile" class="btn btn-default" style="padding: 2px 4px; font-size=12px; margin-top: 8px;">Remove</button>
+                        </div>
+                        <span class="progress" ng-show="detailFile.progress >= 0">
+                            <div style="width:{{detailFile.progress}}%" ng-bind="detailFile.progress + '%'"></div>
+                        </span>
+                        <span ng-show="detailFile.result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer text-right bg-light lter">
+                <button class="btn btn-success btn-s-xs" 
+                        ng-disabled="!myForm.$valid" ng-click="addTopic()">Submit</button>
+            </footer>
+        </section>
+    </form>
+</div>

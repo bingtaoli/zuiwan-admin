@@ -38,6 +38,10 @@ zuiwanApp.config(["$routeProvider", function($routeProvider){
 		templateUrl: "views/topics.html",
 		controller: 'TopicsCtrl',
 	})
+	.when("/medias/addTopic", {
+		templateUrl: "views/addTopic.html",
+		controller: 'AddTopicCtrl',
+	})
 	.when("/topics/edit/:id", {
 		templateUrl: "views/editTopic.html",
 		controller: 'EditTopicCtrl',

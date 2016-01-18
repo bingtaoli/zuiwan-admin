@@ -12,13 +12,13 @@
         <tr ng-repeat="media in medias">
             <td>{{media.media_name}}</td>
             <td>
-                <img height="100px" ng-src="{{media.media_avatar}}">
+                <img style="max-width: 200px; max-height: 100px;"  ng-src="{{media.media_avatar}}">
             </td>
             <td>
-                <img height="100px;" ng-src="{{media.media_detail_back}}">
+                <img style="max-width: 200px; max-height: 100px;" ng-src="{{media.media_detail_back}}">
             </td>
             <td class="edit-or-del">
-                <a class="fa fa-edit"></a>
+                <a class="fa fa-edit" href="#/medias/edit/{{media.id}}"></a>
                 <span class="fa fa-times"></span>
             </td>
         </tr>

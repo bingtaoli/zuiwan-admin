@@ -12,25 +12,28 @@ zuiwanControllers.controller('MediasCtrl', ['$scope', '$http', function($scope, 
 zuiwanControllers.controller('AddMediaCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 function($scope, $http, Upload, $timeout){
 	$scope.addMedia = function(){
-		var file = $scope.avatarFile;
-    	file.upload = Upload.upload({
-	      	url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
-	      	data: { 
-	      		file: file,
-
-	      	},
-    	});
-    	file.upload.then(function (response) {
-      		$timeout(function () {
-        		file.result = response.data;
-      		});
-    	}, function (response) {
-      		if (response.status > 0)
-        	$scope.errorMsg = response.status + ': ' + response.data;
-    	}, function (evt) {
-      		// Math.min is to fix IE which reports 200% sometimes
-      		file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-    	});
+		var formData = new FormData($('[name="myForm"]')[0]);
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost/zuiwan-backend/index.php/media/add_media',
+            dataType: 'JSON',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout : 80000,  // 80s超时时间
+            success: function (json) {
+                if (json.status == 'success'){
+                    console.log("success");
+                } else if (json.status == 'error'){
+                    console.log(json.message);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
     };
 }])
 

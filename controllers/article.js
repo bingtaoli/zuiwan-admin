@@ -14,7 +14,7 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 	var id = $routeParams.id;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/media/admin_get_media"
+		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_media"
 	}).success(function(data){
 		$scope.medias = data;
 	});
@@ -92,7 +92,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 	$scope.article_img_preview_show = false;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/media/admin_get_media"
+		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_media"
 	}).success(function(data){
 		$scope.medias = data;
 	});

@@ -8,3 +8,42 @@ zuiwanControllers.controller('TopicsCtrl', ['$scope', '$http', function($scope, 
 		$scope.topics = data;
 	});
 }])
+
+zuiwanControllers.controller('AddTopicCtrl', ['$scope', '$http', 'Upload', '$timeout', 
+function($scope, $http, Upload, $timeout){
+	$scope.addTopic = function(){
+		var formData = new FormData($('[name="myForm"]')[0]);
+        $.ajax({
+            type: "POST",
+            url: 'http://localhost/zuiwan-backend/index.php/topic/add_topic',
+            dataType: 'JSON',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout : 80000,  // 80s超时时间
+            success: function (json) {
+                if (json.status == 'success'){
+                    console.log("success");
+                } else if (json.status == 'error'){
+                    console.log(json.message);
+                }
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        });
+    };
+}])
+
+zuiwanControllers.controller('EditTopicCtrl', ['$scope', '$http', 'Upload', '$timeout', 
+	'$routeParams', function($scope, $http, Upload, $timeout, $routeParams){
+	var id = $routeParams.id;
+	$http({
+		method: 'GET',
+		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/get_one_topic?id=" + id,
+	}).success(function(data){
+		$scope.topic = data;
+	});
+}])
