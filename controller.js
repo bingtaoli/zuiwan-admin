@@ -89,7 +89,8 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	});
  }])
 
-zuiwanControllers.controller('EditCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams){
+zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 
+	'$routeParams', function($scope, $http, Upload, $timeout, $routeParams){
 	var id = $routeParams.id;
 	$http({
 		method: 'GET',
@@ -200,3 +201,5 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	});
     }
 }])
+
+zuiwan
