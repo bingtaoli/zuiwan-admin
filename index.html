@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en" class="app" ng-app="zuiwanApp">
+<head>
+    <meta charset="utf-8" />
+    <title>zuiwan admin</title>
+    <meta name="description" content="app, web app, responsive, admin dashboard, admin, flat, flat ui, ui kit, off screen nav" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <link rel="stylesheet" href="css/app.v2.css" type="text/css" />
+    <link rel="stylesheet" href="css/zuiwan.css" type="text/css" />
+    <link rel="stylesheet" href="js\calendar/bootstrap_calendar.css" type="text/css" cache="false" />
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="node_modules/angular-route/angular-route.js"></script>
+    <script src="app.js"></script>
+    <script src="controller.js"></script>
+</head>
+<body>
+    <section class="vbox">
+        <header class="bg-white dk header navbar navbar-fixed-top-xs" style="border-bottom: 1px solid rgba(0, 0, 0, .1);">
+            <div class="bg-dark navbar-header aside-md">
+                <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <a href="#" class="navbar-brand" data-toggle="fullscreen">
+                    <img src="images/logo.png" class="m-r-sm"><span style="color: white">醉晚Admin</span>
+                </a>
+                <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+                    <i class="fa fa-cog"></i>
+                </a>
+            </div>
+            <ul class="nav navbar-nav navbar-right hidden-xs nav-user">
+                <li class="dropdown hidden-xs"> <a href="#" class="dropdown-toggle dker" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i></a>
+                    <section class="dropdown-menu aside-xl animated fadeInUp">
+                        <section class="panel bg-white">
+                            <form role="search">
+                                <div class="form-group wrapper m-b-none">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Search">
+                                        <span class="input-group-btn">
+                                            <button type="submit" class="btn btn-info btn-icon"><i class="fa fa-search"></i></button>
+                                        </span> 
+                                    </div>
+                                </div>
+                            </form>
+                        </section>
+                    </section>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <span class="thumb-sm avatar pull-left"> <img src="images/avatar.png"></span>bingtaoli<b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight">
+                        <span class="arrow top"></span>
+                        <li> <a href="#">Settings</a> </li>
+                        <li> <a href="profile.html">Profile</a> </li>
+                        <li> <a href="docs.html">Help</a> </li>
+                        <li class="divider"></li>
+                        <li> <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a> </li>
+                    </ul>
+                </li>
+            </ul>
+        </header>
+        <section>
+            <section class="hbox stretch"> <!-- .aside -->
+                <aside class="bg-dark lter aside-md hidden-print" id="nav">
+                    <section class="vbox">
+                        <section class="w-f scrollable">
+                            <div class="slim-scroll" data-height="auto" data-disable-fade-out="true" data-distance="0" data-size="5px" data-color="#333333"> <!-- nav -->
+                                <nav class="nav-primary hidden-xs">
+                                    <ul class="nav">
+                                        <li class="active">
+                                            <a href="#/visit" class="active">
+                                                <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                                <span>总访问量</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/allArticles" class="active">
+                                                <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                                <span>所有文章</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#/publish" class="active">
+                                                <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                                <span>发布文章</span>
+                                            </a>
+                                        </li>
+                                        <li >
+                                            <a>
+                                                <i class="fa fa-file-text icon"> <b class="bg-primary"></b></i>
+                                                <span class="pull-right"> <i class="fa fa-angle-down text"></i>
+                                                    <i class="fa fa-angle-up text-active"></i>
+                                                </span>
+                                                <span>媒体专题</span>
+                                            </a>
+                                            <ul class="nav lt">
+                                                <li><a ui-sref="#/media"><i class="fa fa-angle-right"></i><span>媒体</span></a></li>
+                                                <li><a ui-sref="#/topic"><i class="fa fa-angle-right"></i><span>专题</span></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </nav>
+                                <!-- / nav --> 
+                            </div>
+                        </section>
+                    </section>
+                </aside>
+                <!-- /.aside -->
+                <section id="content">
+                    <section class="vbox">
+                        <section class="scrollable padder">
+                            <div ng-view></div>
+                        </section>
+                    </section>
+                </section>
+            </section>
+        </section>
+    </section> 
+    <script src="js/app.v2.js"></script>
+    <script src="js/charts/easypiechart/jquery.easy-pie-chart.js" cache="false"></script> 
+    <script src="js/charts/sparkline/jquery.sparkline.min.js" cache="false"></script> 
+    <script src="js/charts/flot/jquery.flot.min.js" cache="false"></script> 
+    <script src="js/charts/flot/jquery.flot.tooltip.min.js" cache="false"></script> 
+    <script src="js/charts/flot/jquery.flot.resize.js" cache="false"></script> 
+    <script src="js/charts/flot/jquery.flot.grow.js" cache="false"></script> 
+    <script src="js/charts/flot/demo.js" cache="false"></script> 
+    <script src="js/calendar/bootstrap_calendar.js" cache="false"></script> 
+    <script src="js/calendar/demo.js" cache="false"></script> 
+    <script src="js/sortable/jquery.sortable.js" cache="false"></script>
+    <script src="plugin/ckeditor/ckeditor.js" cache="false"></script>
+    <script src="node_modules/ng-file-upload/dist/ng-file-upload-shim.js"></script>
+    <script src="node_modules/ng-file-upload/dist/ng-file-upload.js"></script>
+</body>
+</html>
