@@ -1,0 +1,27 @@
+<div id="all-topic" style="padding: 10px;">
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>专题名称</th>
+            <th>专题大图</th>
+            <th>媒体detail背景</th>
+            <th>编辑</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="topic in topics">
+            <td>{{topic.topic_name}}</td>
+            <td>
+                <img height="100px" ng-src="{{topic.topic_img}}">
+            </td>
+            <td>
+                <img height="100px" ng-src="{{topic.topic_detail_back}}">
+            </td>
+            <td class="edit-or-del">
+                <a class="fa fa-edit"></a>
+                <span class="fa fa-times"></span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

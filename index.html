@@ -28,7 +28,10 @@
                 </a>
             </div>
             <ul class="nav navbar-nav navbar-right hidden-xs nav-user">
-                <li class="dropdown hidden-xs"> <a href="#" class="dropdown-toggle dker" data-toggle="dropdown"><i class="fa fa-fw fa-search"></i></a>
+                <li class="dropdown hidden-xs">
+                    <a class="dropdown-toggle dker" data-toggle="dropdown" style="cursor: pointer">
+                        <i class="fa fa-fw fa-search"></i>
+                    </a>
                     <section class="dropdown-menu aside-xl animated fadeInUp">
                         <section class="panel bg-white">
                             <form role="search">
@@ -45,16 +48,14 @@
                     </section>
                 </li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer">
                         <span class="thumb-sm avatar pull-left"> <img src="images/avatar.png"></span>bingtaoli<b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu animated fadeInRight">
                         <span class="arrow top"></span>
-                        <li> <a href="#">Settings</a> </li>
-                        <li> <a href="profile.html">Profile</a> </li>
-                        <li> <a href="docs.html">Help</a> </li>
+                        <li> <a>Settings</a> </li>
                         <li class="divider"></li>
-                        <li> <a href="modal.lockme.html" data-toggle="ajaxModal">Logout</a> </li>
+                        <li> <a >Logout</a> </li>
                     </ul>
                 </li>
             </ul>
@@ -86,7 +87,7 @@
                                             </a>
                                         </li>
                                         <li >
-                                            <a>
+                                            <a style="cursor: pointer">
                                                 <i class="fa fa-file-text icon"> <b class="bg-primary"></b></i>
                                                 <span class="pull-right"> <i class="fa fa-angle-down text"></i>
                                                     <i class="fa fa-angle-up text-active"></i>
@@ -94,8 +95,8 @@
                                                 <span>媒体专题</span>
                                             </a>
                                             <ul class="nav lt">
-                                                <li><a ui-sref="#/media"><i class="fa fa-angle-right"></i><span>媒体</span></a></li>
-                                                <li><a ui-sref="#/topic"><i class="fa fa-angle-right"></i><span>专题</span></a></li>
+                                                <li><a href="#/medias"><i class="fa fa-angle-right"></i><span>媒体</span></a></li>
+                                                <li><a href="#/topics"><i class="fa fa-angle-right"></i><span>专题</span></a></li>
                                             </ul>
                                         </li>
                                     </ul>
