@@ -1,4 +1,4 @@
-<div id="all-article" style="padding: 10px;">
+<div id="all-article" style="padding: 10px; margin-bottom: 10px;">
     <table class="can-more table table-bordered table-striped" style="background: white">
         <colgroup>
             <col class="col-xs-2">
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="article in articles">
-                <td>{{ article.article_title }}</td>
+                <td><a ui-sref="viewArticle({id: article.id})">{{ article.article_title }}</a></td>
                 <td>{{ article.create_time }}</td>
                 <td>{{ article.article_author }}</td>
                 <td>{{ article.article_topic_name }}</td>

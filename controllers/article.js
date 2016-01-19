@@ -134,3 +134,14 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	//@ todo
     }
 }])
+
+zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
+	var id = $stateParams.id;
+	$http({
+		method: 'GET',
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_one_article?id=" + id,
+	}).success(function(data){
+		$scope.article = data;
+	});
+}])
+
