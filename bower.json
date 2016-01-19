@@ -1,0 +1,21 @@
+{
+  "name": "zuiwan-admin",
+  "description": "醉晚网站后台管理",
+  "main": "index.html",
+  "authors": [
+    "bingtaoli <1464738780@qq.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/bingtaoli/zuiwan-admin",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "Chart.js": "~1.0.2"
+  }
+}
