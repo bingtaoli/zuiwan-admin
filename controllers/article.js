@@ -129,4 +129,8 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
       		file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
     	});
     };
+    $scope.preview = function(){
+    	var content = window.editor.getData();
+    	//@ todo
+    }
 }])

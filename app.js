@@ -64,6 +64,14 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		}
     	}
     })
+    .state('previewArticle', {
+        url: "/preview",
+        views: {
+            "": {
+                templateUrl: "views/framework.html",
+            }
+        }
+    })
     .state('medias', {
     	url: '/medias',
     	views: {
