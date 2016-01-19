@@ -1,0 +1,97 @@
+<section class="vbox">
+    <header class="bg-white dk header navbar navbar-fixed-top-xs" style="border-bottom: 1px solid rgba(0, 0, 0, .1);">
+        <div class="bg-dark navbar-header aside-md">
+            <a class="btn btn-link visible-xs" data-toggle="class:nav-off-screen">
+                <i class="fa fa-bars"></i>
+            </a>
+            <a href="#" class="navbar-brand" data-toggle="fullscreen">
+                <img src="images/logo.png" class="m-r-sm"><span style="color: white">醉晚Admin</span>
+            </a>
+            <a class="btn btn-link visible-xs" data-toggle="dropdown" data-target=".nav-user">
+                <i class="fa fa-cog"></i>
+            </a>
+        </div>
+        <ul class="nav navbar-nav navbar-right hidden-xs nav-user">
+            <li class="dropdown hidden-xs">
+                <a class="dropdown-toggle dker" data-toggle="dropdown" style="cursor: pointer">
+                    <i class="fa fa-fw fa-search"></i>
+                </a>
+                <section class="dropdown-menu aside-xl animated fadeInUp">
+                    <section class="panel bg-white">
+                        <form role="search">
+                            <div class="form-group wrapper m-b-none">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Search">
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-info btn-icon"><i class="fa fa-search"></i></button>
+                                    </span> 
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                </section>
+            </li>
+            <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" style="cursor: pointer">
+                    <span class="thumb-sm avatar pull-left"> <img src="images/avatar.png"></span>bingtaoli<b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu animated fadeInRight">
+                    <span class="arrow top"></span>
+                    <li> <a>Settings</a> </li>
+                    <li class="divider"></li>
+                    <li> <a >Logout</a> </li>
+                </ul>
+            </li>
+        </ul>
+    </header>
+    <section style="height: 100%">
+        <section class="hbox stretch"> <!-- .aside -->
+            <aside class="bg-dark lter aside-md hidden-print" id="nav" ng-controller="SiderCtrl">
+                <section class="vbox">
+                    <nav class="nav-primary hidden-xs">
+                        <ul class="nav">
+                            <li ng-class="{'active': isActive('#/visit')}">
+                                <a href="#/visit">
+                                    <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                    <span>总访问量</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': isActive('#/allArticles')}">
+                                <a ui-sref="allArticles">
+                                    <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                    <span>所有文章</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': isActive('#/publish')}">
+                                <a ui-sref="publishArticle">
+                                    <i class="fa fa-dashboard icon"><b class="bg-danger"></b></i>
+                                    <span>发布文章</span>
+                                </a>
+                            </li>
+                            <li ng-class="{'active': isActive('#/medias') || isActive('#/topics')}">
+                                <a style="cursor: pointer">
+                                    <i class="fa fa-file-text icon"> <b class="bg-primary"></b></i>
+                                    <span class="pull-right"> <i class="fa fa-angle-down text"></i>
+                                        <i class="fa fa-angle-up text-active"></i>
+                                    </span>
+                                    <span>媒体专题</span>
+                                </a>
+                                <ul class="nav lt">
+                                    <li><a ui-sref="medias"><i class="fa fa-angle-right"></i><span>媒体</span></a></li>
+                                    <li><a ui-sref="topics"><i class="fa fa-angle-right"></i><span>专题</span></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </section>
+            </aside>
+            <section id="content">
+                <section class="vbox">
+                    <section class="scrollable padder">
+                    <div ui-view="section@"></div>
+                    </section>
+                </section>
+            </section>        
+        </section>  
+    </section>
+</section> 

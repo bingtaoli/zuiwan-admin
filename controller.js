@@ -79,3 +79,11 @@ zuiwanControllers.controller('VisitCtrl', ['$scope', function ($scope) {
 		console.log("drawData");
 	}
 }]);
+
+zuiwanControllers.controller("SiderCtrl", ['$scope', '$location', function($scope, $location){
+	$scope.isActive = function(current){
+		var href = '#'+$location.url();
+	    return current === href;
+	}
+}])
+

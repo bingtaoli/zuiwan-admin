@@ -38,8 +38,8 @@ function($scope, $http, Upload, $timeout){
 }])
 
 zuiwanControllers.controller('EditMediaCtrl', ['$scope', '$http', 'Upload', '$timeout', 
-	'$routeParams', function($scope, $http, Upload, $timeout, $routeParams){
-	var id = $routeParams.id;
+	'$stateParams', function($scope, $http, Upload, $timeout, $stateParams){
+	var id = $stateParams.id;
 	$http({
 		method: 'GET',
 		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_one_media?id=" + id,

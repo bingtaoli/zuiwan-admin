@@ -17,3 +17,11 @@ a#back {
 	margin-bottom: 5px;
 	border-bottom: 1px solid rgba(0, 0, 0, .4);
 }
+.nav-container {
+	width: 220px;
+}
+.nav-fixed {
+	position: fixed;
+	float: none;
+	top: 51px;
+}
