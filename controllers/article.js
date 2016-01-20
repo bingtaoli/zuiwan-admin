@@ -3,7 +3,7 @@
 zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_article"
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=10"
 	}).success(function(data){
 		$scope.articles = data;
 	});
