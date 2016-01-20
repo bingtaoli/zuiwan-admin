@@ -6,7 +6,23 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=10"
 	}).success(function(data){
 		$scope.articles = data;
+
 	});
+	$scope.delArticle = function(id){
+		$http({
+			method: "POST",
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
+			data: {
+				id: id,
+			}
+		}).success(function(){
+			console.log("del success");
+			$scope.articles.splice(id, 1);
+		});
+	};
+	$scope.otherPlaceClick = function(){
+		$('body').click();
+	}
  }])
 
 zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 
