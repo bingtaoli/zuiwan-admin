@@ -23,7 +23,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="article in articles">
+            <tr ng-repeat="article in articles track by $index">
                 <td><a ui-sref="viewArticle({id: article.id})">{{ article.article_title }}</a></td>
                 <td>{{ article.create_time }}</td>
                 <td>{{ article.article_author }}</td>
@@ -45,7 +45,7 @@
                                                 <header class="panel-heading">确定删除?</header>
                                                 <div class="panel-body">
                                                     <a class="btn btn-default" ng-click="otherPlaceClick()">取消</a>
-                                                    <a class="btn btn-danger" ng-click="delArticle(article.id)">删除</a>
+                                                    <a class="btn btn-danger" ng-click="delArticle(article.id, $index)">删除</a>
                                                 </div>
                                             </section>
                                         </div>

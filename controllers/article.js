@@ -1,5 +1,9 @@
 'use strict';
 
+var otherPlaceClick = function(){
+	$('body').click();
+}
+
 zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
 	$http({
 		method: 'GET',
@@ -8,21 +12,20 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 		$scope.articles = data;
 
 	});
-	$scope.delArticle = function(id){
+	$scope.delArticle = function(id, index){
 		$http({
 			method: "POST",
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
+			url: "http://localhost/zuiwan-backend/index.php/article/del_article",
 			data: {
 				id: id,
 			}
 		}).success(function(){
 			console.log("del success");
-			$scope.articles.splice(id, 1);
+			otherPlaceClick();
+			$scope.articles.splice(index, 1);
 		});
 	};
-	$scope.otherPlaceClick = function(){
-		$('body').click();
-	}
+	$scope.otherPlaceClick = otherPlaceClick;
  }])
 
 zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 

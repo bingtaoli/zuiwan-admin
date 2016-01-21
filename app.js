@@ -7,7 +7,55 @@ var zuiwanApp = angular.module('zuiwanApp', [
 	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad',
 ]);
 
-zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
+zuiwanApp.config(['$httpProvider', function($httpProvider){
+    $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
+    $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+    // Override $http service's default transformRequest
+    $httpProvider.defaults.transformRequest = [function(data) {
+        /**
+         * The workhorse; converts an object to x-www-form-urlencoded serialization.
+         * @param {Object} obj
+         * @return {String}
+         */
+        var param = function(obj) {
+            var query = '';
+            var name, value, fullSubName, subName, subValue, innerObj, i;
+ 
+            for (name in obj) {
+                value = obj[name];
+ 
+                if (value instanceof Array) {
+                    for (i = 0; i < value.length; ++i) {
+                        subValue = value[i];
+                        fullSubName = name + '[' + i + ']';
+                        innerObj = {};
+                        innerObj[fullSubName] = subValue;
+                        query += param(innerObj) + '&';
+                    }
+                } else if (value instanceof Object) {
+                    for (subName in value) {
+                        subValue = value[subName];
+                        fullSubName = name + '[' + subName + ']';
+                        innerObj = {};
+                        innerObj[fullSubName] = subValue;
+                        query += param(innerObj) + '&';
+                    }
+                } else if (value !== undefined && value !== null) {
+                    query += encodeURIComponent(name) + '='
+                            + encodeURIComponent(value) + '&';
+                }
+            }
+ 
+            return query.length ? query.substr(0, query.length - 1) : query;
+        };
+ 
+        return angular.isObject(data) && String(data) !== '[object File]'
+                ? param(data)
+                : data;
+    }];
+}])
+
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 	$urlRouterProvider.otherwise("/allArticles");
 	$stateProvider
 	.state('login', {
@@ -40,7 +88,7 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
                 templateUrl: "views/articles.html",
                 controller: 'ArticlesCtrl',
             }
-    	}
+        }
     })
     .state('editArticle', {
     	url: "/allArticles/edit/:id",
@@ -50,9 +98,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		'section': {
     			templateUrl: "views/editArticle.html",
-				controller: 'EditCtrl',
-    		}
-    	}
+                controller: 'EditCtrl',
+            }
+        }
     })
     .state('publishArticle', {
     	url: "/publish",
@@ -62,9 +110,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section: {
     			templateUrl: "views/publish.html",
-				controller: 'PublishCtrl'
-    		}
-    	}
+                controller: 'PublishCtrl'
+            }
+        }
     })
     .state('previewArticle', {
         url: "/preview",
@@ -94,9 +142,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section: {
     			templateUrl: "views/medias.html",
-				controller: 'MediasCtrl',
-    		}
-    	}
+                controller: 'MediasCtrl',
+            }
+        }
     })
     .state('topics', {
     	url: '/topics', 
@@ -106,9 +154,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section: {
     			templateUrl: "views/topics.html",
-				controller: 'TopicsCtrl',
-    		}
-    	}
+                controller: 'TopicsCtrl',
+            }
+        }
     })
     .state('medias.addMedia', {
     	url: '/addMedia',
@@ -118,9 +166,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section: {
     			templateUrl: "views/addMedia.html",
-				controller: 'AddMediaCtrl',
-    		}
-    	}
+                controller: 'AddMediaCtrl',
+            }
+        }
     })
     .state('topics.addTopic', {
     	url: '/addTopic',
@@ -142,9 +190,9 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section: {
     			templateUrl: "views/editMedia.html",
-				controller: 'EditMediaCtrl',
-    		}
-    	}
+                controller: 'EditMediaCtrl',
+            }
+        }
     })
     .state('topics.editTopic', {
     	url: '/editTopic/:id',
@@ -154,8 +202,8 @@ zuiwanApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvide
     		},
     		section:{
     			templateUrl: "views/editTopic.html",
-				controller: 'EditTopicCtrl',
-    		}
-    	}
+                controller: 'EditTopicCtrl',
+            }
+        }
     })
 }]);
