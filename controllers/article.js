@@ -11,6 +11,12 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	}).success(function(data){
 		$scope.articles = data;
 	});
+	$http({
+		method: "GET",
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_article_count"
+	}).success(function(data){
+		$scope.article_count = data;
+	});
 	$scope.delArticle = function(id, index){
 		$.ajax({
 			type: "POST",
@@ -27,6 +33,21 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 		})
 	};
 	$scope.otherPlaceClick = otherPlaceClick;
+	$scope.numberOptions = [
+		{value: 10},
+		{value: 20},
+		{value: 30},
+		{value: 50},
+	];
+	$scope.updatePageNumber = function(){
+		var num = $scope.numberPerPage.value;
+		$http({
+			method: 'GET',
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=" + num,
+		}).success(function(data){
+			$scope.articles = data;
+		});
+	};
  }])
 
 zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 
