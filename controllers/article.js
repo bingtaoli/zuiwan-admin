@@ -10,20 +10,21 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=10"
 	}).success(function(data){
 		$scope.articles = data;
-
 	});
 	$scope.delArticle = function(id, index){
-		$http({
-			method: "POST",
-			url: "http://localhost/zuiwan-backend/index.php/article/del_article",
+		$.ajax({
+			type: "POST",
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
+			dataType: 'JSON',
 			data: {
 				id: id,
+			},
+			success: function(){
+				console.log("del success");
+				otherPlaceClick();
+				$scope.articles.splice(index, 1);
 			}
-		}).success(function(){
-			console.log("del success");
-			otherPlaceClick();
-			$scope.articles.splice(index, 1);
-		});
+		})
 	};
 	$scope.otherPlaceClick = otherPlaceClick;
  }])
@@ -121,6 +122,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 	}).success(function(data){
 		$scope.topics = data;
 	});
+	$scope.preview = false;
 	$scope.uploadPic = function(){
 		var file = $scope.picFile;
 		var content = window.editor.getData();
@@ -148,9 +150,14 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
       		file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
     	});
     };
-    $scope.preview = function(){
+    $scope.toPreview = function(){
     	var content = window.editor.getData();
-    	//@ todo
+    	$scope.article_content = content;
+		$scope.preview = true;
+    }
+    $scope.quitPreview = function(){
+    	$scope.preview = false;
+    	$scope.article_content = '';
     }
 }])
 

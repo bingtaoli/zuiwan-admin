@@ -4,7 +4,7 @@ var log = console.log.bind(console);
 
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
-	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad',
+	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize',
 ]);
 
 zuiwanApp.config(['$httpProvider', function($httpProvider){

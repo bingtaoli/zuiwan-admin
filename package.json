@@ -6,6 +6,7 @@
   "dependencies": {
     "angular": "^1.4.8",
     "angular-route": "^1.4.8",
+    "angular-sanitize": "^1.4.9",
     "angular-ui-router": "^0.2.15",
     "bower": "^1.7.2",
     "jquery": "^2.2.0",

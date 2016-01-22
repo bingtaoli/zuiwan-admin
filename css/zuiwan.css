@@ -12,10 +12,11 @@
 #all-article {
 	font-size: 11px;
 }
-a#back {
+a.back {
 	display: inline-block;
 	margin-bottom: 5px;
 	border-bottom: 1px solid rgba(0, 0, 0, .4);
+	cursor: pointer;
 }
 .nav-container {
 	width: 220px;
@@ -27,4 +28,28 @@ a#back {
 }
 footer {
 	margin-bottom: 20px;
+}
+#publish {
+	padding: 10px; 
+	position: absolute;
+	width: 95%;
+}
+#publish.active {
+	left: -95%;
+}
+#preview-page {
+	padding: 10px;
+	position: absolute;
+	width: 95%;
+	height: 100%;
+	left: 100%;
+}
+#preview-page.active {
+	left: auto;
+}
+#preview-content {
+	background: white; 
+}
+#preview-content img {
+	max-width: 100% !important;
 }

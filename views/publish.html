@@ -1,4 +1,4 @@
-<div id="publish" style="padding: 10px;" data-ng-init="load()">
+<div id="publish" data-ng-init="load()" ng-class="{true: 'active'}[preview]">
     <form class="form-horizontal" name="myForm">
         <section class="panel panel-default">
             <header class="panel-heading">发布文章</header>
@@ -51,10 +51,21 @@
                 </div>
             </div>
             <footer class="panel-footer text-right bg-light lter">
-                <button class="btn btn-success btn-s-xs" ng-click="preview()" disabled="disabled">预览todo</button>
+                <button type="button" class="btn btn-success btn-s-xs" ng-click="toPreview()">预览</button>
                 <button class="btn btn-success btn-s-xs" 
                         ng-disabled="!myForm.$valid" ng-click="uploadPic()">Submit</button>
             </footer>
         </section>
     </form>
+</div>
+<div id="preview-page" ng-class="{true: 'active'}[preview]">
+    <a ng-click="quitPreview()" class="back">返回发布文章</a>
+    <section class="panel panel-default">
+        <header class="panel-heading">文章预览</header>
+        <div class="panel-body">
+            <div id="preview-content">
+                <p style="background: white;" ng-bind-html="article_content"></p>
+            </div>
+        </div>
+    </section>    
 </div>
