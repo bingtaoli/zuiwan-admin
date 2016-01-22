@@ -4,10 +4,18 @@ var otherPlaceClick = function(){
 	$('body').click();
 }
 
+function num2Array(num){
+	var range = [];
+	for(var i = 0; i < num; i++) {
+		range.push(i);
+	}
+	return range;
+}
+
 zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=10"
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=2"
 	}).success(function(data){
 		$scope.articles = data;
 	});
@@ -17,6 +25,7 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	}).success(function(data){
 		$scope.article_count = data;
 	});
+	$scope.currentPage = 0;
 	$scope.delArticle = function(id, index){
 		$.ajax({
 			type: "POST",
@@ -34,19 +43,52 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	};
 	$scope.otherPlaceClick = otherPlaceClick;
 	$scope.numberOptions = [
+		{value: 2},
+		{value: 5},
 		{value: 10},
-		{value: 20},
 		{value: 30},
-		{value: 50},
 	];
+	$scope.$watch("numberPerPage.value", function(){
+		$scope.updatePageNumber();
+	});
+	$scope.$watch("currentPage", function(){
+		$scope.updatePageIndex();
+	});
 	$scope.updatePageNumber = function(){
 		var num = $scope.numberPerPage.value;
+		$scope.currentPage = 0; //reset currentPage if change pageNumber
+		var index = $scope.currentPage;
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=" + num,
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=" 
+				 + index + "&numberPerPage=" + num,
 		}).success(function(data){
 			$scope.articles = data;
 		});
+	};
+	$scope.updatePageIndex = function(){
+		var num = $scope.numberPerPage.value;
+		var index = $scope.currentPage;
+		$http({
+			method: 'GET',
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=" 
+				 + index + "&numberPerPage=" + num,
+		}).success(function(data){
+			$scope.articles = data;
+		});
+	}
+	$scope.range = function(){
+		var pageMax = Math.ceil($scope.article_count / $scope.numberPerPage.value);
+		return num2Array(pageMax);
+	}
+	$scope.prevPageDisabled = function() {
+		return $scope.currentPage === 0 ? "disabled" : "";
+	};
+	$scope.nextPageDisabled = function() {
+		return $scope.currentPage === Math.ceil($scope.article_count / $scope.numberPerPage.value)-1 ? "disabled" : "";
+	};
+	$scope.setPage = function(n){
+		$scope.currentPage = n;
 	};
  }])
 
