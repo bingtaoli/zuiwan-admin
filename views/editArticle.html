@@ -17,15 +17,33 @@
                 <div class="line line-dashed line-lg pull-in"></div>
                 <div class="form-group pull-in clearfix">
                     <div class="col-sm-6">
-                        <label>文章媒体</label>
-                        <select ng-model="article_media" ng-options="media.id as media.media_name for media in medias" class="form-control m-b">
-                            <option value="">-- 请选择 --</option>
+                        <label>是否推荐上首页</label>
+                        <select name="is_recommend" ng-model="is_recommend" ng-init="is_recommend='0'" class="form-control m-b">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
                         </select>
                     </div>
                     <div class="col-sm-6">
-                        <label>文章专题</label>
-                        <select ng-model="article_topic" ng-options="topic.id as topic.topic_name for topic in topics" class="form-control m-b">
-                            <option value="">-- 请选择 --</option>
+                        <label>是否推荐上首页滚动栏</label>
+                        <select name="is_banner" ng-model="is_banner" ng-init="is_banner='0'" class="form-control m-b">
+                            <option value="0">否</option>
+                            <option value="1">是</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="line line-dashed line-lg pull-in"></div>
+                <div class="form-group pull-in clearfix">
+                    <div class="col-sm-6">
+                        <label>文章媒体<i ng-show="myForm.article_media.$error.required">*required</i></label>
+                        <select required name="article_media" ng-model="article_media" class="form-control m-b">
+                            <option ng-repeat="media in medias" value="{{media.id}}">{{media.media_name}}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label>文章专题<i ng-show="myForm.article_topic.$error.required">*required</i></label>
+                        <select required name="article_topic" ng-model="article_topic" class="form-control m-b">
+                            <option>-- 请选择 --</option>
+                            <option ng-repeat="topic in topics" value="{{topic.id}}">{{topic.topic_name}}</option>
                         </select>
                     </div>
                 </div>
@@ -36,7 +54,7 @@
             </div>
             <footer class="panel-footer text-right bg-light lter">
                 <button class="btn btn-success btn-s-xs" 
-                        ng-disabled="!myForm.$valid" ng-click="update()">Submit</button>
+                        ng-disabled="!myForm.$valid" ng-click="updateArticle()">Submit</button>
             </footer>
         </section>
     </form>
@@ -50,10 +68,10 @@
                             <p>当前大图</p>
                             <img height="200px" ng-src="{{article_img}}">
                         </div>
-                        <label>文章大图<i ng-show="imgForm.file.$error.required">*required</i></label>
-                        <input type="file" required ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
-                        <i ng-show="imgForm.file.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
-                        <img ng-show="imgForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                        <label>文章大图<i ng-show="imgForm.article_img.$error.required">*required</i></label>
+                        <input type="file" required ngf-select ng-model="picFile" name="article_img" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <i ng-show="imgForm.article_img.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="imgForm.article_img.$valid" ngf-thumbnail="picFile" class="thumb">
                         <div>
                             <button ng-click="picFile = null" ng-show="picFile" class="btn btn-default" style="padding: 2px 4px; font-size=12px; margin-top: 8px;">Remove</button>
                         </div>
@@ -68,7 +86,7 @@
             </div>
             <footer class="panel-footer text-right bg-light lter">
                 <button class="btn btn-success btn-s-xs" 
-                        ng-disabled="!imgForm.$valid" ng-click="uploadPic(picFile)">Submit</button>
+                        ng-disabled="!imgForm.$valid" ng-click="updateImg()">Submit</button>
             </footer>
         </section>
     </form>

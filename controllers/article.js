@@ -109,9 +109,10 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 	});
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_one_article?id=" + id,
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_one_article?id=" + id,
 	}).success(function(data){
 		$scope.article = data;
+		log(data);
 		var article = data;
 		$scope.article_title = article.article_title;
 		$scope.article_intro = article.article_intro;
@@ -123,49 +124,37 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 			if ($scope.editorInited){
 				window.editor.setData(article.article_content);
 				clearInterval(timer);
+				log("clear interval");
 			}
 		}, 100);
 	});
 	$scope.load = function(){
 		editor_init();
 		$scope.editorInited = true;
+		log("loded");
 	};
-	$scope.update = function(){
-		$http({
-			method: "POST",
-			url: '',
-			data: {
-				article_title: $scope.article_title,
-	      		article_intro: $scope.article_intro,
-	      		article_media: $scope.article_media,
-	      		article_topic: $scope.article_topic,
-	      		article_content: content,
-	      		article_author: "李冰涛",
-	      		is_update: 1,
-	      		id: $scope.article.id,
-			}
+	$scope.updateArticle = function(){
+		var content = window.editor.getData();
+		var formData = new FormData($('[name="myForm"]')[0]);
+		formData.append("is_update", 1);
+		formData.append('id', $scope.article.id);
+		formData.append('article_content', content);
+		log(formData);
+		$.ajax({
+			type: "POST",
+			url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
+			dataType: 'JSON',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout : 80000,  // 80s超时时间
+            success: function(){
+            	log("update success");
+            }
 		});
 	};
-	$scope.uploadPic = function(file){
-		var content = window.editor.getData();
-    	file.upload = Upload.upload({
-	      	url: 'http://localhost/zuiwan-backend/index.php/article/add_article',
-	      	data: { 
-	      		file: file,
-	      	},
-    	});
-    	file.upload.then(function (response) {
-      		$timeout(function () {
-        		file.result = response.data;
-      		});
-    	}, function (response) {
-      		if (response.status > 0)
-        	$scope.errorMsg = response.status + ': ' + response.data;
-    	}, function (evt) {
-      		// Math.min is to fix IE which reports 200% sometimes
-      		file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-    	});
-    }
 }])
 
 zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
@@ -189,10 +178,10 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 
 	$scope.publish = function(){
 		var content = window.editor.getData();
-
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
 		formData.append('article_author', "李冰涛");
+		formData.append('article_color', "rgba(0, 51, 153, .9)");
         $.ajax({
             type: "POST",
             url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
@@ -214,32 +203,6 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
                 console.log(e);
             }
         });
-        // var file = $scope.picFile;
-    	// file.upload = Upload.upload({
-	    //   	url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
-	    //   	data: {
-	    //   		file: file,
-	    //   		article_title: $scope.article_title,
-	    //   		article_intro: $scope.article_intro,
-	    //   		article_media: $scope.article_media,
-	    //   		article_topic: $scope.article_topic,
-	    //   		article_content: content,
-	    //   		article_author: "李冰涛",
-	    //   		is_recommend: $scope.is_recommend,
-	    //   		is_banner: $scope.is_banner,
-	    //   	},
-    	// });
-    	// file.upload.then(function (response) {
-     //  		$timeout(function () {
-     //    		file.result = response.data;
-     //  		});
-    	// }, function (response) {
-     //  		if (response.status > 0)
-     //    	$scope.errorMsg = response.status + ': ' + response.data;
-    	// }, function (evt) {
-     //  		// Math.min is to fix IE which reports 200% sometimes
-     //  		file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
-    	// });
     };
     $scope.toPreview = function(){
     	var content = window.editor.getData();
