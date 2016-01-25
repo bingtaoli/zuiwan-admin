@@ -12,6 +12,35 @@ function num2Array(num){
 	return range;
 }
 
+zuiwanControllers.directive('colorSelector', function(){
+    return {
+        restrict: 'AE',
+        replace: true,
+        template: '<div ng-include="\'views/directive/colorSelector.html\'"></div>',
+        link: function(scope, elem, attr){
+            scope.sliders = {
+		    	redValue: 0,
+		    	greenValue: 51,
+		    	blueValue: 153,
+		    	opacity: 9,
+		    };
+		    scope.colorOptions = {
+				min: 0,
+				max: 255
+			};
+			scope.opacityOptions = {
+				min: 0,
+				max: 10
+			};
+		    scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue, sliders.opacity]", function(){
+		    	var opacity = scope.sliders.opacity / 10;
+				scope.color = 'rgba('+ scope.sliders.redValue + ',' + scope.sliders.greenValue + ',' 
+		    				+ scope.sliders.blueValue + ',' + opacity + ')';
+			});
+		}
+	}
+});
+
 zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
 	var defaultPageNumer = 5;
 	$http({
@@ -112,15 +141,25 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		method: 'GET',
 		url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_one_article?id=" + id,
 	}).success(function(data){
-		$scope.article = data;
-		log(data);
+		if (!data){
+			return;
+		}
+		log("article detail: ", data);
 		var article = data;
-		$scope.article_title = article.article_title;
-		$scope.article_intro = article.article_intro;
-		$scope.article_media = article.article_media;
-		$scope.article_topic = article.article_topic;
-		$scope.article_img = article.article_img;
-		$scope.article_content = article.article_content;
+		$scope.article = article;
+		//改变color
+		var color = article.article_color;
+		var matches;
+		if (matches = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(0\.[0-9])\)/)){
+			//符合rgba的格式
+			$scope.sliders = {
+		    	redValue: matches[1],
+		    	greenValue: matches[2],
+		    	blueValue: matches[3],
+		    	opacity: matches[4] * 10,
+		    };
+		}
+	    //防止ckeditor尚未初始化 :(
 		var timer = setInterval(function(){
 			if ($scope.editorInited){
 				window.editor.setData(article.article_content);
@@ -138,6 +177,7 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
+		formData.append('article_color', $scope.color);
 		$.ajax({
 			type: "POST",
 			url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
@@ -153,22 +193,6 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
             }
 		});
 	};
-	$scope.sliders = {
-    	redValue: 0,
-    	greenValue: 51,
-    	blueValue: 153,
-    	opacity: 9,
-    };
-    $scope.colorOptions = {
-		min: 0,
-		max: 255
-	};
-    $scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue]", function(){
-		$scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
-    				+ $scope.sliders.blueValue + ')';
-	});
-    $scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
-    				+ $scope.sliders.blueValue + ')';
 }])
 
 zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
@@ -195,7 +219,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
 		formData.append('article_author', "李冰涛");
-		formData.append('article_color', "rgba(0, 51, 153, .9)");
+		formData.append('article_color', $scope.color);
         $.ajax({
             type: "POST",
             url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
@@ -227,22 +251,6 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
-    $scope.sliders = {
-    	redValue: 0,
-    	greenValue: 51,
-    	blueValue: 153,
-    	opacity: 9,
-    };
-    $scope.colorOptions = {
-		min: 0,
-		max: 255
-	};
-    $scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue]", function(){
-		$scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
-    				+ $scope.sliders.blueValue + ')';
-	});
-    $scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
-    				+ $scope.sliders.blueValue + ')';
 }])
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
