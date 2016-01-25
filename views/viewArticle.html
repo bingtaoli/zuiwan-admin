@@ -1,2 +1,10 @@
 <a ui-sref="allArticles" class="back">&lt;&lt;返回所有文章</a>
-<div ng-bind-html="article.article_content"></div>
+<section class="panel panel-default">
+    <header class="panel-heading">文章查看</header>
+    <div class="panel-body">
+        <div id="preview-content">
+        	<img src="{{article.article_img}}" style="margin-bottom: 18px;">
+            <p style="background: white;" ng-bind-html="article.article_content"></p>
+        </div>
+    </div>
+</section>   

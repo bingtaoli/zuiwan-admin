@@ -1,4 +1,4 @@
-<div id="edit" style="padding: 10px;" data-ng-init="load()">
+<div id="edit" data-ng-init="load()">
     <a ui-sref="allArticles" class="back">&lt;&lt;返回所有文章</a>
     <form class="form-horizontal" name="myForm">
         <section class="panel panel-default">
@@ -45,6 +45,17 @@
                             <option>-- 请选择 --</option>
                             <option ng-repeat="topic in topics" value="{{topic.id}}">{{topic.topic_name}}</option>
                         </select>
+                    </div>
+                </div>
+                <div class="line line-dashed line-lg pull-in"></div>
+                <label>文章颜色(rgba选择)</label>
+                <div class="row" style="padding: 8px 0;">
+                    <color-selector/>
+                </div>
+                <label>颜色预览</label>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div style="width: 100px; height: 100px; background: {{color}}"></div>
                     </div>
                 </div>
                 <div class="line line-dashed line-lg pull-in"></div>

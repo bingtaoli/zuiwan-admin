@@ -13,9 +13,10 @@ function num2Array(num){
 }
 
 zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
+	var defaultPageNumer = 5;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=2"
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=" + defaultPageNumer,
 	}).success(function(data){
 		$scope.articles = data;
 	});
@@ -43,10 +44,10 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	};
 	$scope.otherPlaceClick = otherPlaceClick;
 	$scope.numberOptions = [
-		{value: 2},
-		{value: 5},
+		{value: defaultPageNumer},
+		{value: 8},
 		{value: 10},
-		{value: 30},
+		{value: 20},
 	];
 	$scope.$watch("numberPerPage.value", function(){
 		$scope.updatePageNumber();
@@ -124,14 +125,12 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 			if ($scope.editorInited){
 				window.editor.setData(article.article_content);
 				clearInterval(timer);
-				log("clear interval");
 			}
 		}, 100);
 	});
 	$scope.load = function(){
 		editor_init();
 		$scope.editorInited = true;
-		log("loded");
 	};
 	$scope.updateArticle = function(){
 		var content = window.editor.getData();
@@ -139,7 +138,6 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
-		log(formData);
 		$.ajax({
 			type: "POST",
 			url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
@@ -155,6 +153,22 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
             }
 		});
 	};
+	$scope.sliders = {
+    	redValue: 0,
+    	greenValue: 51,
+    	blueValue: 153,
+    	opacity: 9,
+    };
+    $scope.colorOptions = {
+		min: 0,
+		max: 255
+	};
+    $scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue]", function(){
+		$scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
+    				+ $scope.sliders.blueValue + ')';
+	});
+    $scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
+    				+ $scope.sliders.blueValue + ')';
 }])
 
 zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
@@ -212,7 +226,23 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     $scope.quitPreview = function(){
     	$scope.preview = false;
     	$scope.article_content = '';
-    }
+    };
+    $scope.sliders = {
+    	redValue: 0,
+    	greenValue: 51,
+    	blueValue: 153,
+    	opacity: 9,
+    };
+    $scope.colorOptions = {
+		min: 0,
+		max: 255
+	};
+    $scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue]", function(){
+		$scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
+    				+ $scope.sliders.blueValue + ')';
+	});
+    $scope.color = 'rgb('+ $scope.sliders.redValue + ',' + $scope.sliders.greenValue + ',' 
+    				+ $scope.sliders.blueValue + ')';
 }])
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){

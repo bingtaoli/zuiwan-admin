@@ -4,8 +4,16 @@ var log = console.log.bind(console);
 
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
-	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize',
+	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize', 'ui.bootstrap-slider'
 ]);
+
+zuiwanApp.directive('colorSelector', function(){
+    return {
+        restrict: 'AE',
+        replace: true,
+        template: '<div ng-include="\'views/directive/colorSelector.html\'"></div>'
+    }
+});
 
 zuiwanApp.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
