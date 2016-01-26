@@ -1,0 +1,34 @@
+<div style="padding: 10px;">
+    <a ui-sref="topics" class="back">&lt;&lt;返回所有专题</a>
+    <form class="form-horizontal" name="myForm">
+        <section class="panel panel-default">
+            <header class="panel-heading">编辑专题</header>
+            <div class="panel-body">
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <div ng-show="topic.topic_img">
+                            <p>当前专题图片</p>
+                            <img height="200px" ng-src="{{topic.topic_img}}">
+                        </div>
+                        <label>更改专题图片<i ng-show="myForm.topic_img.$error.required">*required</i></label>
+                        <input type="file" required ngf-select ng-model="picFile" name="topic_img" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <i ng-show="myForm.topic_img.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="myForm.topic_img.$valid" ngf-thumbnail="picFile" class="thumb">
+                        <div>
+                            <button ng-click="picFile = null" ng-show="picFile" class="btn btn-default" style="padding: 2px 4px; font-size=12px; margin-top: 8px;">Remove</button>
+                        </div>
+                        <span class="progress" ng-show="picFile.progress >= 0">
+                            <div style="width:{{picFile.progress}}%" ng-bind="picFile.progress + '%'"></div>
+                        </span>
+                        <span ng-show="picFile.result">Upload Successful</span>
+                        <span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+                    </div>
+                </div>
+            </div>
+            <footer class="panel-footer text-right bg-light lter">
+                <button class="btn btn-success btn-s-xs" 
+                        ng-disabled="!myForm.$valid" ng-click="update()">Submit</button>
+            </footer>
+        </section>
+    </form>
+</div>

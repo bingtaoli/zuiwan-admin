@@ -10,10 +10,10 @@
                             <p>当前头像</p>
                             <img height="200px" ng-src="{{media.media_avatar}}">
                         </div>
-                        <label>媒体头像<i ng-show="imgForm.file.$error.required">*required</i></label>
-                        <input type="file" required ngf-select ng-model="picFile" name="file" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
-                        <i ng-show="imgForm.file.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
-                        <img ng-show="imgForm.file.$valid" ngf-thumbnail="picFile" class="thumb">
+                        <label>媒体头像<i ng-show="imgForm.avatar.$error.required">*required</i></label>
+                        <input type="file" required ngf-select ng-model="picFile" name="avatar" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <i ng-show="imgForm.avatar.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
+                        <img ng-show="imgForm.avatar.$valid" ngf-thumbnail="picFile" class="thumb">
                         <div>
                             <button ng-click="picFile = null" ng-show="picFile" class="btn btn-default" style="padding: 2px 4px; font-size=12px; margin-top: 8px;">Remove</button>
                         </div>

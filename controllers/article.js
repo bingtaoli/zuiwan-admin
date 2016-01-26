@@ -48,21 +48,22 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	});
 	$scope.currentPage = 0;
 	$scope.delArticle = function(id, index){
-		$.ajax({
-			type: "POST",
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
-			dataType: 'JSON',
-			data: {
-				id: id,
-			},
-			success: function(){
-				console.log("del success");
-				otherPlaceClick();
-				$scope.articles.splice(index, 1);
-			}
-		})
+		var req = {
+            method: "POST",
+            url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
+            data: { 
+                id: id,
+            }
+        };
+		/**
+         * @note 如果使用$ajax，$scope.articles.splice()无法反映到页面!
+         */
+        $http(req).then(function(){
+            console.log("del success");
+			otherPlaceClick();
+			$scope.articles.splice(index, 1);
+        });
 	};
-	$scope.delFunc = "delArticle(article.id, $index)";
 	$scope.otherPlaceClick = otherPlaceClick;
 	$scope.numberOptions = [
 		{value: defaultPageNumer},
