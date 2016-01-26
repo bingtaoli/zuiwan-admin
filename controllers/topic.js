@@ -7,6 +7,7 @@ zuiwanControllers.controller('TopicsCtrl', ['$scope', '$http', function($scope, 
 	}).success(function(data){
 		$scope.topics = data;
 	});
+    $scope.otherPlaceClick = otherPlaceClick;
 }])
 
 zuiwanControllers.controller('AddTopicCtrl', ['$scope', '$http', 'Upload', '$timeout', 
@@ -15,7 +16,7 @@ function($scope, $http, Upload, $timeout){
 		var formData = new FormData($('[name="myForm"]')[0]);
         $.ajax({
             type: "POST",
-            url: 'http://localhost/zuiwan-backend/index.php/topic/add_topic',
+            url: 'http://115.28.75.190/zuiwan-backend/index.php/topic/add_topic',
             dataType: 'JSON',
             data: formData,
             async: false,

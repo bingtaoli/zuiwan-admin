@@ -7,7 +7,24 @@ zuiwanControllers.controller('MediasCtrl', ['$scope', '$http', function($scope, 
 	}).success(function(data){
 		$scope.medias = data;
 	});
-}])
+    $scope.delMedia = function(id, index){
+        $.ajax({
+            type: "POST",
+            url: "http://115.28.75.190/zuiwan-backend/index.php/media/del_media",
+            dataType: 'JSON',
+            data: {
+                id: id,
+            },
+            success: function(){
+                console.log("del success");
+                otherPlaceClick();
+                log($scope.medias);
+                $scope.medias.splice(index, 1);
+            }
+        })
+    };
+    $scope.otherPlaceClick = otherPlaceClick;
+}]);
 
 zuiwanControllers.controller('AddMediaCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 function($scope, $http, Upload, $timeout){
@@ -15,7 +32,7 @@ function($scope, $http, Upload, $timeout){
 		var formData = new FormData($('[name="myForm"]')[0]);
         $.ajax({
             type: "POST",
-            url: 'http://localhost/zuiwan-backend/index.php/media/add_media',
+            url: 'http://115.28.75.190/zuiwan-backend/index.php/media/add_media',
             dataType: 'JSON',
             data: formData,
             async: false,

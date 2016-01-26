@@ -16,7 +16,7 @@ function editor_init(){
 
 var zuiwanControllers = angular.module('zuiwanControllers', []);
 
-zuiwanControllers.controller('VisitCtrl', ['$scope', function ($scope) {
+zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', function ($scope, $http) {
 	function drawData(){
 		var data = {
 		    labels: ["周一", "周二", "周三", "周四", "周五", "周六", "周日"],
@@ -41,7 +41,15 @@ zuiwanControllers.controller('VisitCtrl', ['$scope', function ($scope) {
 	}
 	$scope.load = function(){
 		drawData();
-	}
+	};
+	$http({
+		method: 'GET',
+		url: "http://115.28.75.190/zuiwan-backend/index.php/admin/get_website_information",
+	}).success(function(data){
+		log(data);
+		$scope.article_count = data.article_count;
+		$scope.user_count = data.user_count;
+	});
 }]);
 
 zuiwanControllers.controller("SiderCtrl", ['$scope', '$location', function($scope, $location){

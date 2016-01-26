@@ -2,10 +2,23 @@
 
 var log = console.log.bind(console);
 
+var otherPlaceClick = function(){
+    $('body').click();
+}
+
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
 	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize', 'ui.bootstrap-slider'
 ]);
+
+zuiwanApp.directive('editOrDel', function(){
+    return {
+        restrict: 'AE',
+        templateUrl: function(elem, attr){
+            return 'views/directive/editOrDel' + attr.type + '.html';
+        },
+    }
+});
 
 zuiwanApp.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
@@ -146,6 +159,30 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
             }
         }
     })
+    .state('addMedia', {
+        url: '/addMedia',
+        views: {
+            "": {
+                templateUrl: "views/framework.html",
+            },
+            section: {
+                templateUrl: "views/addMedia.html",
+                controller: 'AddMediaCtrl',
+            }
+        }
+    })
+    .state('editMedia', {
+        url: '/editMedia/:id',
+        views: {
+            "": {
+                templateUrl: "views/framework.html",
+            },
+            section:{
+                templateUrl: "views/editMedia.html",
+                controller: 'EditMediaCtrl',
+            }
+        }
+    })
     .state('topics', {
     	url: '/topics', 
     	views: {
@@ -158,19 +195,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
             }
         }
     })
-    .state('medias.addMedia', {
-    	url: '/addMedia',
-    	views: {
-    		"": {
-    			templateUrl: "views/framework.html",
-    		},
-    		section: {
-    			templateUrl: "views/addMedia.html",
-                controller: 'AddMediaCtrl',
-            }
-        }
-    })
-    .state('topics.addTopic', {
+    .state('addTopic', {
     	url: '/addTopic',
     	views: {
     		"": {
@@ -182,19 +207,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	},
         controller: 'AddTopicCtrl',
     })
-    .state('medias.editMedia', {
-    	url: '/editMedia/:id',
-    	views: {
-    		"": {
-    			templateUrl: "views/framework.html",
-    		},
-    		section: {
-    			templateUrl: "views/editMedia.html",
-                controller: 'EditMediaCtrl',
-            }
-        }
-    })
-    .state('topics.editTopic', {
+    .state('editTopic', {
     	url: '/editTopic/:id',
     	views: {
     		"": {

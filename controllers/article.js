@@ -1,9 +1,5 @@
 'use strict';
 
-var otherPlaceClick = function(){
-	$('body').click();
-}
-
 function num2Array(num){
 	var range = [];
 	for(var i = 0; i < num; i++) {
@@ -45,15 +41,10 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	var defaultPageNumer = 5;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=0&numberPerPage=" + defaultPageNumer,
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=0&numberPerPage=" + defaultPageNumer,
 	}).success(function(data){
-		$scope.articles = data;
-	});
-	$http({
-		method: "GET",
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_article_count"
-	}).success(function(data){
-		$scope.article_count = data;
+		$scope.articles = data.articles;
+		$scope.article_count = data.count;
 	});
 	$scope.currentPage = 0;
 	$scope.delArticle = function(id, index){
@@ -71,6 +62,7 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 			}
 		})
 	};
+	$scope.delFunc = "delArticle(article.id, $index)";
 	$scope.otherPlaceClick = otherPlaceClick;
 	$scope.numberOptions = [
 		{value: defaultPageNumer},
@@ -79,34 +71,77 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 		{value: 20},
 	];
 	$scope.$watch("numberPerPage.value", function(){
-		$scope.updatePageNumber();
-	});
-	$scope.$watch("currentPage", function(){
-		$scope.updatePageIndex();
-	});
-	$scope.updatePageNumber = function(){
-		var num = $scope.numberPerPage.value;
+		//每页显示数目改变
+		var numberPerPage = $scope.numberPerPage.value;
 		$scope.currentPage = 0; //reset currentPage if change pageNumber
 		var index = $scope.currentPage;
+		var is_recommend = $scope.searchCondition.is_recommend;
+		var is_banner = $scope.searchCondition.is_banner;
+		var urlPostfix = '';
+		if (is_recommend == '0' || is_recommend == '1'){
+			urlPostfix += "&is_recommend=" + is_recommend;
+		}
+		if (is_banner == '0' || is_banner == '1'){
+			urlPostfix += "&is_banner=" + is_banner;
+		}
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=" 
-				 + index + "&numberPerPage=" + num,
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
 		}).success(function(data){
-			$scope.articles = data;
+			$scope.articles = data.articles;
+			$scope.article_count = data.count;
 		});
-	};
-	$scope.updatePageIndex = function(){
-		var num = $scope.numberPerPage.value;
+	});
+	$scope.$watch("currentPage", function(){
+		//索引改变
+		var numberPerPage = $scope.numberPerPage.value;
 		var index = $scope.currentPage;
+		var is_recommend = $scope.searchCondition.is_recommend;
+		var is_banner = $scope.searchCondition.is_banner;
+		var urlPostfix = '';
+		if (is_recommend == '0' || is_recommend == '1'){
+			urlPostfix += "&is_recommend=" + is_recommend;
+		}
+		if (is_banner == '0' || is_banner == '1'){
+			urlPostfix += "&is_banner=" + is_banner;
+		}
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_page_article?index=" 
-				 + index + "&numberPerPage=" + num,
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
 		}).success(function(data){
-			$scope.articles = data;
+			$scope.articles = data.articles;
+			$scope.article_count = data.count;
 		});
-	}
+	});
+	$scope.searchCondition = {
+		is_recommend: '4',
+		is_banner: '4',
+	};
+	$scope.$watch("[searchCondition.is_recommend, searchCondition.is_banner]", function(){
+		$scope.currentPage = 0; //reset currentPage if change pageNumber
+		var index = 0;
+		var numberPerPage = $scope.numberPerPage.value;
+		var is_recommend = $scope.searchCondition.is_recommend;
+		var is_banner = $scope.searchCondition.is_banner;
+		var urlPostfix = '';
+		if (is_recommend == '0' || is_recommend == '1'){
+			urlPostfix += "&is_recommend=" + is_recommend;
+		}
+		if (is_banner == '0' || is_banner == '1'){
+			urlPostfix += "&is_banner=" + is_banner;
+		}
+		$http({
+			method: 'GET',
+			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
+		}).success(function(data){
+			$scope.articles = data.articles;
+			$scope.article_count = data.count;
+		});
+	});
+	//给底部分页list一个遍历的range数组
 	$scope.range = function(){
 		var pageMax = Math.ceil($scope.article_count / $scope.numberPerPage.value);
 		return num2Array(pageMax);

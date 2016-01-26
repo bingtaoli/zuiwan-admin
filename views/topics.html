@@ -14,11 +14,10 @@
                 <img height="100px" ng-src="{{topic.topic_img}}">
             </td>
             <td class="edit-or-del">
-                <a class="fa fa-edit"></a>
-                <span class="fa fa-times"></span>
+                <edit-or-del type="Topic" />
             </td>
         </tr>
         </tbody>
     </table>
-    <a href="#/topics/addTopic" class="btn btn-success">新增专题</a>
+    <a ui-sref="addTopic" class="btn btn-success">新增专题</a>
 </div>
