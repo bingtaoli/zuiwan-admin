@@ -19,7 +19,7 @@ var zuiwanControllers = angular.module('zuiwanControllers', []);
 zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
 	$http({
 		method: "GET",
-		url: "http://localhost/zuiwan-backend/index.php/article/get_top_article",
+		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_top_article",
 	}).success(function(data){
 		var topArticles = [];
 		var topArticleIds = [];
