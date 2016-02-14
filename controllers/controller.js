@@ -14,7 +14,7 @@ function editor_init(){
     window.editor = CKEDITOR.replace('rich-editor', config);
 }
 
-var zuiwanControllers = angular.module('zuiwanControllers', []);
+var zuiwanControllers = angular.module('zuiwanControllers', ['storage']);
 
 zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {
 	$http({
@@ -89,7 +89,11 @@ zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', '$state', function
             	}
 			}
 	    });
-	    revenueChart.render();
+		try {
+			revenueChart.render();
+		} catch(e){
+			//ignore
+		}
 	};
 
 	$http({
@@ -107,5 +111,40 @@ zuiwanControllers.controller("SiderCtrl", ['$scope', '$location', function($scop
 		var href = '#'+$location.url();
 	    return current === href;
 	}
-}])
+}]);
 
+zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
+	$scope.login = function(){
+		var credentials = {
+			username: $scope.username,
+			password: $scope.password,
+			remember_me: $scope.remember_me,
+		};
+		AuthService.login(credentials);
+	}
+});
+
+zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
+	//如果已经有session，则直接返回
+	if (AuthService.isAuthenticated()){
+		return;
+	}
+	//登录token认证检测
+	if (Cookie.getCookie('zw_username')){
+		var username = Cookie.getCookie('zw_username');
+		var token = Cookie.getCookie('zw_token');
+		var data = {
+			username: username,
+			token: token
+		};	
+		$http.post('http://localhost/zuiwan-backend/index.php/admin/login', data)
+		.then(function (res) {
+            if (res.data.status == 1){
+                log('base controller login success');
+            } else {
+                log('login fail', res.data.message);
+                $state.go('login');
+            }
+        });
+	}
+});

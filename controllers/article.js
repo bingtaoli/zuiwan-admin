@@ -37,7 +37,10 @@ zuiwanControllers.directive('colorSelector', function(){
 	}
 });
 
-zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope, $http) {
+zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService) {
+	if (AuthService.isAuthenticated()){
+
+	}
 	var defaultPageNumer = 5;
 	$http({
 		method: 'GET',
@@ -156,7 +159,7 @@ zuiwanControllers.controller('ArticlesCtrl', ['$scope', '$http', function($scope
 	$scope.setPage = function(n){
 		$scope.currentPage = n;
 	};
- }])
+ })
 
 zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 	'$stateParams', function($scope, $http, Upload, $timeout, $stateParams){

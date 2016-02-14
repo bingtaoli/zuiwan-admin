@@ -8,8 +8,15 @@ var otherPlaceClick = function(){
 
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
-	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize', 'ui.bootstrap-slider'
+	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize', 'ui.bootstrap-slider',
+    'auth',
 ]);
+
+zuiwanApp.run(function($rootScope){
+    $rootScope.$on('$stateChangeStart', function(){
+        //log('change');
+    })
+});
 
 zuiwanApp.directive('editOrDel', function(){
     return {
@@ -76,6 +83,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
 		views: {
 			"": {
 				templateUrl: 'views/login.html',
+                controller: 'LoginCtrl',
 			}
 		}
 	})
@@ -84,6 +92,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
         views: {
             "": {
                 templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
             },
             section: {
                 templateUrl: "views/visit.html",
@@ -96,6 +105,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
             section: {
                 templateUrl: "views/articles.html",
@@ -108,6 +118,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		'section': {
     			templateUrl: "views/editArticle.html",
@@ -120,6 +131,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		section: {
     			templateUrl: "views/publish.html",
@@ -132,6 +144,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
         views: {
             "": {
                 templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
             }
         }
     })
@@ -140,6 +153,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
         views: {
             "": {
                 templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
             },
             section: {
                 templateUrl: "views/viewArticle.html",
@@ -152,6 +166,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		section: {
     			templateUrl: "views/medias.html",
@@ -164,6 +179,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
         views: {
             "": {
                 templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
             },
             section: {
                 templateUrl: "views/addMedia.html",
@@ -176,6 +192,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
         views: {
             "": {
                 templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
             },
             section:{
                 templateUrl: "views/editMedia.html",
@@ -188,6 +205,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		section: {
     			templateUrl: "views/topics.html",
@@ -200,6 +218,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		section: {
     			templateUrl: "views/addTopic.html",
@@ -212,6 +231,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     	views: {
     		"": {
     			templateUrl: "views/framework.html",
+                controller: 'BaseCtrl',
     		},
     		section:{
     			templateUrl: "views/editTopic.html",
