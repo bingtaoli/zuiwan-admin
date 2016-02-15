@@ -125,6 +125,23 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 });
 
 zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
+	$scope.logout = function(){
+		log('hehe');
+		var data = {
+			username: $scope.username
+		};
+		//delete local session
+		AuthService.logout();
+		$http.post('http://localhost/zuiwan-backend/index.php/admin/logout', data)
+		.then(function(res){
+			if (res.data.status == 1){
+				log('logout success');
+				$state.go('login');
+			} else {
+				log('logout fail');
+			}
+		});
+	};
 	//如果已经有session，则直接返回
 	if (AuthService.isAuthenticated()){
 		$scope.user = AuthService.getAuth();
@@ -142,7 +159,7 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 		var data = {
 			username: username,
 			token: token
-		};	
+		};
 		$http.post('http://localhost/zuiwan-backend/index.php/admin/login', data)
 		.then(function (res) {
             if (res.data.status == 1){
@@ -152,5 +169,5 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
                 $state.go('login');
             }
         });
-	}
+	};
 });

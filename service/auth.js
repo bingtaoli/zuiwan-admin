@@ -21,6 +21,10 @@ auth.factory('AuthService', function ($http, Session, $state) {
             });
     };
 
+    authService.logout = function(){
+        Session.delUser();
+    }
+
     authService.isAuthenticated = function () {
         if (Session.getUser()){
             return true;

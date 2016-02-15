@@ -19,6 +19,9 @@ storage.factory('Session', function ($window) {
             return JSON.parse(str);
         }
         return null;
+    };
+    this.delUser = function(){
+        $window.sessionStorage.removeItem('user');
     }
     return this;
 });

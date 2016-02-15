@@ -12,6 +12,13 @@
 #all-article {
 	font-size: 11px;
 }
+a {
+	cursor: pointer !important;
+}
+a.logout:hover {
+    text-decoration: underline !important;
+    background: white !important;
+}
 a.back {
 	display: inline-block;
 	margin-top: 7px;
