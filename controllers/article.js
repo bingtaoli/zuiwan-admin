@@ -37,10 +37,7 @@ zuiwanControllers.directive('colorSelector', function(){
 	}
 });
 
-zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService) {
-	if (AuthService.isAuthenticated()){
-
-	}
+zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService, $state) {
 	var defaultPageNumer = 5;
 	$http({
 		method: 'GET',

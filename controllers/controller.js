@@ -127,7 +127,13 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
 	//如果已经有session，则直接返回
 	if (AuthService.isAuthenticated()){
+		$scope.user = AuthService.getAuth();
+		$scope.username = $scope.user.username;
+		$scope.hehe = "hehehehe";
+		log('base controller ', $scope.user);
 		return;
+	} else {
+		$state.go('login');
 	}
 	//登录token认证检测
 	if (Cookie.getCookie('zw_username')){

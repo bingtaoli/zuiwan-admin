@@ -14,7 +14,11 @@ storage.factory('Session', function ($window) {
         $window.sessionStorage.setItem('user', JSON.stringify(json));
     }
     this.getUser = function(){
-        return $window.sessionStorage.getItem('user');
+        var str = $window.sessionStorage.getItem('user');
+        if (str){
+            return JSON.parse(str);
+        }
+        return null;
     }
     return this;
 });
