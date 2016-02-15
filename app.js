@@ -12,6 +12,8 @@ var zuiwanApp = angular.module('zuiwanApp', [
     'auth',
 ]);
 
+var ONLINE_MODE = (window.location.host == '115.28.75.190' ? true : false);
+
 zuiwanApp.run(function($rootScope){
     $rootScope.$on('$stateChangeStart', function(){
         //log('change');
