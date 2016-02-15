@@ -126,11 +126,14 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 
 zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
 	var loginUrl; // login url
+	var logoutUrl;
 	log('ONLINE_MODE', ONLINE_MODE);
 	if (ONLINE_MODE){
 		loginUrl = 'http://115.28.75.190/zuiwan-backend/index.php/admin/login';
+		logoutUrl = 'http://115.28.75.190/zuiwan-backend/index.php/admin/logout';
 	} else {
 		loginUrl = 'http://localhost/zuiwan-backend/index.php/admin/login';
+		logoutUrl = 'http://localhost/zuiwan-backend/index.php/admin/logout';
 	}
 	$scope.logout = function(){
 		var data = {
@@ -138,7 +141,7 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 		};
 		//delete local session
 		AuthService.logout();
-		$http.post(loginUrl, data)
+		$http.post(logoutUrl, data)
 		.then(function(res){
 			if (res.data.status == 1){
 				log('logout success');
