@@ -126,6 +126,7 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 
 zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
 	var loginUrl; // login url
+	log('ONLINE_MODE', ONLINE_MODE);
 	if (ONLINE_MODE){
 		loginUrl = 'http://115.28.75.190/zuiwan-backend/index.php/admin/login';
 	} else {
