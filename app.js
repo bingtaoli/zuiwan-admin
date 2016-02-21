@@ -224,6 +224,7 @@ zuiwanApp.config(['$httpProvider', function($httpProvider){
     		},
     		section: {
     			templateUrl: "views/addTopic.html",
+                controller: 'AddTopicCtrl'
     		}
     	},
         controller: 'AddTopicCtrl',

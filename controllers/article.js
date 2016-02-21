@@ -293,6 +293,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
+    
 }])
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
