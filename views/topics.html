@@ -14,7 +14,12 @@
                 <img height="100px" ng-src="{{topic.topic_img}}">
             </td>
             <td class="edit-or-del">
-                <edit-or-del type="Topic" />
+                <edit-or-del-common 
+                    del-func="delTopic(topic.id, $index)" 
+                    other-place-click="otherPlaceClick()"
+                    go-edit="editTopic(topic.id, $index)"                        
+                />
+                <!-- <edit-or-del type="Topic" /> -->
             </td>
         </tr>
         </tbody>

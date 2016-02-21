@@ -1,5 +1,5 @@
 <ul class="nav navbar-nav">
-    <li><a class="fa fa-edit" ui-sref="editMedia({id: media.id})"></a></li>
+    <li><a class="fa fa-edit" ng-click="goEdit()"></a></li>
     <li class="dropdown hidden-xs" style="display: inline-block;">
         <a class="dropdown-toggle dker" data-toggle="dropdown" style="cursor: pointer; padding: 0;">
             <i class="fa fa-fw fa-times"></i>
@@ -12,7 +12,7 @@
                             <header class="panel-heading">确定删除?</header>
                             <div class="panel-body">
                                 <a class="btn btn-default" ng-click="otherPlaceClick()">取消</a>
-                                <a class="btn btn-danger" ng-click="delMedia(media.id, $index)">删除</a>
+                                <a class="btn btn-danger" ng-click="delFunc()">删除</a>
                             </div>
                         </section>
                     </div>

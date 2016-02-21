@@ -1,6 +1,6 @@
 'use strict';
 
-zuiwanControllers.controller('TopicsCtrl', ['$scope', '$http', function($scope, $http){
+zuiwanControllers.controller('TopicsCtrl', function($scope, $http, $state){
 	$http({
 		method: 'GET',
 		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic"
@@ -24,8 +24,12 @@ zuiwanControllers.controller('TopicsCtrl', ['$scope', '$http', function($scope, 
             $scope.topics.splice(index, 1);
         });
     };
+    $scope.editTopic = function(id, index){
+        log('topic id', id);
+        $state.go('editTopic', {id: id});
+    }
     $scope.otherPlaceClick = otherPlaceClick;
-}]);
+});
 
 zuiwanControllers.controller('AddTopicCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 function($scope, $http, Upload, $timeout){

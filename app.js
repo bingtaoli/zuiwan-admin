@@ -29,6 +29,21 @@ zuiwanApp.directive('editOrDel', function(){
     }
 });
 
+zuiwanApp.directive('editOrDelCommon', function(){
+    return {
+        restrict: 'AE',
+        scope: {
+            'delFunc': '&',
+            'otherPlaceClick': '&',
+            'article': '=',  //直接继承
+            'goEdit': '&'
+        },
+        templateUrl: function(elem, attr){
+            return 'views/directive/editOrDel.html';
+        },
+    }
+})
+
 zuiwanApp.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';
     $httpProvider.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

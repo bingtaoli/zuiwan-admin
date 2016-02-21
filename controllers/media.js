@@ -1,6 +1,6 @@
 'use strict';
 
-zuiwanControllers.controller('MediasCtrl', ['$scope', '$http', function($scope, $http){
+zuiwanControllers.controller('MediasCtrl', function($scope, $http, $state){
 	$http({
 		method: 'GET',
 		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_media"
@@ -28,8 +28,12 @@ zuiwanControllers.controller('MediasCtrl', ['$scope', '$http', function($scope, 
             $scope.medias.splice(index, 1);
         });
     };
+    $scope.editMedia = function(id, index){
+        log('media id', id);
+        $state.go('editMedia', {id: id});
+    }
     $scope.otherPlaceClick = otherPlaceClick;
-}]);
+});
 
 zuiwanControllers.controller('AddMediaCtrl', ['$scope', '$http', 'Upload', '$timeout', 
 function($scope, $http, Upload, $timeout){

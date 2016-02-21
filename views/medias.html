@@ -14,7 +14,12 @@
                 <img style="max-width: 200px; max-height: 100px;"  ng-src="{{media.media_avatar}}">
             </td>
             <td class="edit-or-del">
-                <edit-or-del type="Media" />
+                <edit-or-del-common 
+                    del-func="delMedia(media.id, $index)" 
+                    other-place-click="otherPlaceClick()"
+                    go-edit="editMedia(media.id, $index)"                        
+                />
+                <!-- <edit-or-del type="Media" /> -->
             </td>
         </tr>
         </tbody>

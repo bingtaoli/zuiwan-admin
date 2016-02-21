@@ -124,7 +124,7 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 	}
 });
 
-zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie){
+zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie, Session){
 	var loginUrl; // login url
 	var logoutUrl;
 	log('ONLINE_MODE', ONLINE_MODE);
@@ -172,7 +172,7 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 	            if (res.data.status == 1){
 	            	//存储到session
                     Session.storeUser({
-                        'username': credentials.username
+                        'username': username
                     });
 	                log('base controller login success');
 	            } else {

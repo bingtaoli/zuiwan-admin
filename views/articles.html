@@ -54,7 +54,12 @@
                 <td>{{ article.article_intro }}</td>
                 <td>{{ article.article_media_name }}</td>
                 <td class="edit-or-del">
-                    <edit-or-del type="Article" />
+                    <edit-or-del-common 
+                        del-func="delArticle(article.id, $index)" 
+                        other-place-click="otherPlaceClick()"
+                        go-edit="editArticle(article.id, $index)"                        
+                    />
+                   <!--  <edit-or-del type="Article" /> -->
                 </td>
             </tr>
         </tbody>

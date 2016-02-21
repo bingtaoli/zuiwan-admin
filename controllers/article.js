@@ -48,6 +48,7 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 	});
 	$scope.currentPage = 0;
 	$scope.delArticle = function(id, index){
+		log('del article, id: ', id);
 		var req = {
             method: "POST",
             url: ONLINE_MODE ?
@@ -157,6 +158,10 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 	};
 	$scope.setPage = function(n){
 		$scope.currentPage = n;
+	};
+	$scope.editArticle = function(id, index){
+		log('article id', id);
+		$state.go('editArticle', {id: id});
 	};
  })
 
@@ -293,7 +298,7 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
-    
+
 }])
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
