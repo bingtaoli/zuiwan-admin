@@ -158,8 +158,6 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 			$scope.username = $scope.user.username;
 			log('base controller ', $scope.user);
 			return;
-		} else {
-			$state.go('login');
 		}
 		//登录token认证检测
 		if (Cookie.getCookie('zw_username')){
@@ -172,13 +170,19 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 			$http.post(loginUrl, data)
 			.then(function (res) {
 	            if (res.data.status == 1){
+	            	//存储到session
+                    Session.storeUser({
+                        'username': credentials.username
+                    });
 	                log('base controller login success');
 	            } else {
 	                log('login fail', res.data.message);
 	                $state.go('login');
 	            }
 	        });
-		};
+		} else {
+			$state.go('login');
+		}
 	}
 	init();
 });

@@ -50,7 +50,9 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 	$scope.delArticle = function(id, index){
 		var req = {
             method: "POST",
-            url: "http://115.28.75.190/zuiwan-backend/index.php/article/del_article",
+            url: ONLINE_MODE ?
+            	 ("http://115.28.75.190/zuiwan-backend/index.php/article/del_article") : 
+            	 ("http://localhost/zuiwan-backend/index.php/article/del_article"),
             data: { 
                 id: id,
             }
@@ -216,7 +218,9 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		formData.append('article_color', $scope.color);
 		$.ajax({
 			type: "POST",
-			url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
+			url:  ONLINE_MODE ? 
+            	  ('http://115.28.75.190/zuiwan-backend/index.php/article/add_article') : 
+            	  ('http://localhost/zuiwan-backend/index.php/article/add_article'),
 			dataType: 'JSON',
             data: formData,
             async: false,
@@ -258,7 +262,9 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
 		formData.append('article_color', $scope.color);
         $.ajax({
             type: "POST",
-            url: 'http://115.28.75.190/zuiwan-backend/index.php/article/add_article',
+            url:  ONLINE_MODE ? 
+            	  ('http://115.28.75.190/zuiwan-backend/index.php/article/add_article') : 
+            	  ('http://localhost/zuiwan-backend/index.php/article/add_article'),
             dataType: 'JSON',
             data: formData,
             async: false,
