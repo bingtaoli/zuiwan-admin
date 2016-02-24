@@ -1,3 +1,6 @@
+<div>
+    <success-fail-msg />
+</div>
 <div style="padding: 10px;">
     <a ui-sref="topics" class="back">&lt;&lt;返回所有专题</a>
     <form class="form-horizontal" name="myForm">
@@ -6,12 +9,18 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-sm-6">
+                        <label>专题名称</label>
+                        <input required type="text" class="form-control" ng-model="topic.topic_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
                         <div ng-show="topic.topic_img">
                             <p>当前专题图片</p>
                             <img height="200px" ng-src="{{topic.topic_img}}">
                         </div>
                         <label>更改专题图片<i ng-show="myForm.topic_img.$error.required">*required</i></label>
-                        <input type="file" required ngf-select ng-model="picFile" name="topic_img" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <input type="file" ngf-select ng-model="picFile" name="topic_img" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
                         <i ng-show="myForm.topic_img.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
                         <img ng-show="myForm.topic_img.$valid" ngf-thumbnail="picFile" class="thumb">
                         <div>

@@ -8,40 +8,15 @@ function num2Array(num){
 	return range;
 }
 
-zuiwanControllers.directive('colorSelector', function(){
-    return {
-        restrict: 'AE',
-        replace: true,
-        template: '<div ng-include="\'views/directive/colorSelector.html\'"></div>',
-        link: function(scope, elem, attr){
-            scope.sliders = {
-		    	redValue: 0,
-		    	greenValue: 51,
-		    	blueValue: 153,
-		    	opacity: 9,
-		    };
-		    scope.colorOptions = {
-				min: 0,
-				max: 255
-			};
-			scope.opacityOptions = {
-				min: 0,
-				max: 10
-			};
-		    scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue, sliders.opacity]", function(){
-		    	var opacity = scope.sliders.opacity / 10;
-				scope.color = 'rgba('+ scope.sliders.redValue + ',' + scope.sliders.greenValue + ',' 
-		    				+ scope.sliders.blueValue + ',' + opacity + ')';
-			});
-		}
-	}
-});
-
 zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService, $state) {
 	var defaultPageNumer = 5;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=0&numberPerPage=" + defaultPageNumer,
+		url: ONLINE_MODE ?
+				("http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=0&numberPerPage=" 
+				+ defaultPageNumer) :
+				("http://localhost/zuiwan-backend/index.php/article/admin_get_page_article?index=0&numberPerPage=" 
+				+ defaultPageNumer),
 	}).success(function(data){
 		$scope.articles = data.articles;
 		$scope.article_count = data.count;
@@ -90,8 +65,11 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 		}
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
-				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
+			url: ONLINE_MODE ?  
+				 ("http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix) :
+				 ("http://localhost/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix),
 		}).success(function(data){
 			$scope.articles = data.articles;
 			$scope.article_count = data.count;
@@ -112,8 +90,11 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 		}
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
-				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
+			url: ONLINE_MODE ? 
+				 ("http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix) :
+				 ("http://localhost/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix),
 		}).success(function(data){
 			$scope.articles = data.articles;
 			$scope.article_count = data.count;
@@ -138,8 +119,11 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 		}
 		$http({
 			method: 'GET',
-			url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
-				 + index + "&numberPerPage=" + numberPerPage + urlPostfix,
+			url: ONLINE_MODE ? 
+				("http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix) : 
+				("http://localhost/zuiwan-backend/index.php/article/admin_get_page_article?index=" 
+				 + index + "&numberPerPage=" + numberPerPage + urlPostfix),
 		}).success(function(data){
 			$scope.articles = data.articles;
 			$scope.article_count = data.count;
@@ -240,20 +224,24 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 	};
 }])
 
-zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$timeout', function($scope, $http, Upload, $timeout){
+zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout){
 	$scope.load = function(){
 		editor_init();
 	};
 	$scope.article_img_preview_show = false;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_media"
+		url: ONLINE_MODE ?
+			 "http://115.28.75.190/zuiwan-backend/index.php/media/get_media" :
+			 "http://localhost/zuiwan-backend/index.php/media/get_media"
 	}).success(function(data){
 		$scope.medias = data;
 	});
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic"
+		url: ONLINE_MODE ?
+			 "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic" :
+			 "http://localhost/zuiwan-backend/index.php/topic/get_topic"
 	}).success(function(data){
 		$scope.topics = data;
 	});
@@ -280,12 +268,18 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
             success: function (json) {
                 if (json.status == 'success'){
                     console.log("success");
+                    $scope.goTop();
+                    $scope.showSuccessMsg('文章发布成功');
                 } else if (json.status == 'error'){
                     console.log(json.message);
+                    $scope.goTop();
+                    $scope.showSuccessMsg('文章发布失败,原因: ' + json.message);
                 }
             },
             error: function (e) {
                 console.log(e);
+                $scope.goTop();
+                $scope.showSuccessMsg('文章发布失败,原因: ' + json.message);
             }
         });
     };
@@ -298,14 +292,15 @@ zuiwanControllers.controller('PublishCtrl', [ '$scope', '$http', 'Upload', '$tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
-
-}])
+})
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
 	var id = $stateParams.id;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/get_one_article?id=" + id,
+		url: ONLINE_MODE ?
+			 ("http://115.28.75.190/zuiwan-backend/index.php/article/get_one_article?id=" + id) :
+			 ("http://localhost/zuiwan-backend/index.php/article/get_one_article?id=" + id),
 	}).success(function(data){
 		$scope.article = data;
 	});

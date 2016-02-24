@@ -20,14 +20,14 @@ zuiwanApp.run(function($rootScope){
     })
 });
 
-zuiwanApp.directive('editOrDel', function(){
-    return {
-        restrict: 'AE',
-        templateUrl: function(elem, attr){
-            return 'views/directive/editOrDel' + attr.type + '.html';
-        },
-    }
-});
+// zuiwanApp.directive('editOrDel', function(){
+//     return {
+//         restrict: 'AE',
+//         templateUrl: function(elem, attr){
+//             return 'views/directive/editOrDel' + attr.type + '.html';
+//         },
+//     }
+// });
 
 zuiwanApp.directive('editOrDelCommon', function(){
     return {
@@ -43,6 +43,43 @@ zuiwanApp.directive('editOrDelCommon', function(){
         },
     }
 })
+
+.directive('successFailMsg', function(){
+    return {
+        templateUrl: function(elem, attr){
+            return 'views/directive/successFailMsg.html'
+        }
+    }
+})
+
+.directive('colorSelector', function(){
+    return {
+        restrict: 'AE',
+        replace: true,
+        template: '<div ng-include="\'views/directive/colorSelector.html\'"></div>',
+        link: function(scope, elem, attr){
+            scope.sliders = {
+                redValue: 0,
+                greenValue: 51,
+                blueValue: 153,
+                opacity: 9,
+            };
+            scope.colorOptions = {
+                min: 0,
+                max: 255
+            };
+            scope.opacityOptions = {
+                min: 0,
+                max: 10
+            };
+            scope.$watch("[sliders.redValue, sliders.blueValue, sliders.greenValue, sliders.opacity]", function(){
+                var opacity = scope.sliders.opacity / 10;
+                scope.color = 'rgba('+ scope.sliders.redValue + ',' + scope.sliders.greenValue + ',' 
+                            + scope.sliders.blueValue + ',' + opacity + ')';
+            });
+        }
+    }
+});
 
 zuiwanApp.config(['$httpProvider', function($httpProvider){
     $httpProvider.defaults.headers.put['Content-Type'] = 'application/x-www-form-urlencoded';

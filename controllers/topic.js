@@ -3,14 +3,18 @@
 zuiwanControllers.controller('TopicsCtrl', function($scope, $http, $state){
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic"
+		url: ONLINE_MODE ?
+             "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic" :
+             "http://localhost/zuiwan-backend/index.php/topic/get_topic",
 	}).success(function(data){
 		$scope.topics = data;
 	});
     $scope.delTopic = function(id, index){
         var req = {
             method: "POST",
-            url: "http://115.28.75.190/zuiwan-backend/index.php/topic/del_topic",
+            url: ONLINE_MODE ?
+                 "http://115.28.75.190/zuiwan-backend/index.php/topic/del_topic" :
+                 'http://localhost/zuiwan-backend/index.php/topic/del_topic',
             data: { 
                 id: id,
             }
@@ -37,7 +41,9 @@ function($scope, $http, Upload, $timeout){
 		var formData = new FormData($('[name="myForm"]')[0]);
         $.ajax({
             type: "POST",
-            url: 'http://115.28.75.190/zuiwan-backend/index.php/topic/add_topic',
+            url: ONLINE_MODE ?
+                 'http://115.28.75.190/zuiwan-backend/index.php/topic/add_topic' :
+                 'http://localhost/zuiwan-backend/index.php/topic/add_topic',
             dataType: 'JSON',
             data: formData,
             async: false,
@@ -48,12 +54,18 @@ function($scope, $http, Upload, $timeout){
             success: function (json) {
                 if (json.status == 'success'){
                     console.log("success");
+                    $scope.goTop();
+                    $scope.showSuccessMsg('媒体增加成功');
                 } else if (json.status == 'error'){
                     console.log(json.message);
+                    $scope.goTop();
+                    $scope.showErrorMsg('媒体增加失败' + json.message);
                 }
             },
             error: function (e) {
                 console.log(e);
+                $scope.goTop();
+                $scope.showErrorMsg('媒体增加失败' + e);
             }
         });
     };
@@ -64,17 +76,22 @@ zuiwanControllers.controller('EditTopicCtrl', ['$scope', '$http', 'Upload', '$ti
 	var id = $stateParams.id;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/admin_get_one_topic?id=" + id,
+		url: ONLINE_MODE ?
+             "http://115.28.75.190/zuiwan-backend/index.php/topic/admin_get_one_topic?id=" + id :
+             "http://localhost/zuiwan-backend/index.php/topic/admin_get_one_topic?id=" + id,
 	}).success(function(data){
 		$scope.topic = data;
 	});
     $scope.update = function(){
         var formData = new FormData($('[name="myForm"]')[0]);
         formData.append('id', $scope.topic.id);
+        formData.append('topic_name', $scope.topic.topic_name)
         log('update topic img: ', $scope.topic.id);
         $.ajax({
             type: "POST",
-            url: 'http://115.28.75.190/zuiwan-backend/index.php/topic/set_topic_img',
+            url: ONLINE_MODE ?
+                 'http://115.28.75.190/zuiwan-backend/index.php/topic/update_topic' :
+                 'http://localhost/zuiwan-backend/index.php/topic/update_topic',
             dataType: 'JSON',
             data: formData,
             async: false,
@@ -85,12 +102,17 @@ zuiwanControllers.controller('EditTopicCtrl', ['$scope', '$http', 'Upload', '$ti
             success: function (json) {
                 if (json.status == 'success'){
                     console.log("success");
+                    $scope.goTop();
+                    $scope.showSuccessMsg('专题修改成功');
                 } else if (json.status == 'error'){
                     console.log(json.message);
+                    $scope.goTop();
+                    $scope.showErrorMsg('专题修改失败' + json.message);
                 }
             },
             error: function (e) {
                 console.log(e);
+                $scope.showErrorMsg('专题修改失败' + e.message);
             }
         });
     }

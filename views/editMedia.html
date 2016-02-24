@@ -1,3 +1,6 @@
+<div>
+    <success-fail-msg />
+</div>
 <div style="padding: 10px;">
     <a ui-sref="medias" class="back">&lt;&lt;返回所有媒体</a>
     <form class="form-horizontal" name="myForm">
@@ -6,12 +9,18 @@
             <div class="panel-body">
                 <div class="form-group">
                     <div class="col-sm-6">
+                        <label>媒体名称</label>
+                        <input required type="text" class="form-control" ng-model="media.media_name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6">
                         <div ng-show="media.media_avatar">
-                            <p>当前头像</p>
+                            <label>当前头像</label>
                             <img height="200px" ng-src="{{media.media_avatar}}">
                         </div>
-                        <label>媒体头像<i ng-show="imgForm.avatar.$error.required">*required</i></label>
-                        <input type="file" required ngf-select ng-model="picFile" name="avatar" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
+                        <label>媒体头像</label>
+                        <input type="file" ngf-select ng-model="picFile" name="avatar" accept="image/*" ngf-max-size="2MB" ngf-model-invalid="errorFiles">
                         <i ng-show="imgForm.avatar.$error.maxSize">File too large {{errorFiles[0].size / 1000000|number:1}}MB: max 2M</i>
                         <img ng-show="imgForm.avatar.$valid" ngf-thumbnail="picFile" class="thumb">
                         <div>

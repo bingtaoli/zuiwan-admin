@@ -109,7 +109,10 @@ zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', '$state', function
 zuiwanControllers.controller("SiderCtrl", ['$scope', '$location', function($scope, $location){
 	$scope.isActive = function(current){
 		var href = '#'+$location.url();
-	    return current === href;
+	    if (href.indexOf(current) >= 0){
+	    	return true;
+	    }
+	    return false;
 	}
 }]);
 
@@ -124,7 +127,30 @@ zuiwanControllers.controller('LoginCtrl', function($scope, AuthService){
 	}
 });
 
-zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie, Session){
+zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $http, Cookie, Session, 
+												  $location, $anchorScroll){
+	// success error msg
+    $scope.hideErrMsg = function(){
+    	$scope.errorHappen = false;
+    };
+    $scope.hideSucMsg = function(){
+    	$scope.successHappen = false;
+    }
+    $scope.showSuccessMsg = function(msg){
+    	log('show success msg: ', msg)
+    	$scope.successHappen = true;
+    	$scope.successMsg = msg;
+    };
+    $scope.showErrorMsg = function(msg){
+    	log('show error msg: ', msg)
+    	$scope.errorHappen = true;
+    	$scope.errorMsg = msg;
+    };
+    $scope.goTop = function(){
+		$location.hash('top');
+		$anchorScroll();
+	};
+
 	var loginUrl; // login url
 	var logoutUrl;
 	log('ONLINE_MODE', ONLINE_MODE);
