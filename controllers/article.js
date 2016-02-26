@@ -336,11 +336,12 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 			    	log(palette);
 			    	log('hehe0');
 			    	//color改成RGB形式
-			    	color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+			    	color = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + '0.9)';
 			    	//colorChoices
 			    	var colorChoices = [];
 			    	for (var i=0; i<palette.length; i++){
-			    		colorChoices.push('rgb(' + palette[i][0] + ',' + palette[i][1] + ',' + palette[i][2] + ')');
+			    		colorChoices.push('rgba(' + palette[i][0] + ',' + palette[i][1] + ',' 
+			    						   + palette[i][2] +  ',' + '0.9)');
 			    	}
 			    	$scope.$apply(function(){
 			    		$scope.color = color;
