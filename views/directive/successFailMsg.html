@@ -1,0 +1,8 @@
+<div ng-show="errorHappen" class="alert alert-warning alert-block" style="margin: 10px 0;">
+    <button ng-click="hideErrMsg()" type="button" class="close">×</button>
+    <p>{{errorMsg}}</p>
+</div>
+<div ng-show="successHappen" class="alert alert-success" style="margin: 10px 0;">
+    <button ng-click="hideSucMsg()" type="button" class="close">×</button>
+    <p>{{successMsg}}</p>
+</div>
