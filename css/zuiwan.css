@@ -62,7 +62,7 @@ footer {
 	max-width: 100% !important;
 }
 
-#RGB {
+/*#RGB {
 	height: 20px;
 	background: rgb(128, 128, 128);
 }
@@ -83,4 +83,24 @@ footer {
 }
 #B .slider-handle {
 	border-bottom-color: blue;
+}*/
+
+/*.article-color-choice {
+	text-align: center;
+}*/
+.article-color-choice h3 {
+	font-size: 20px;
+}
+.swatch {
+    display: inline-block;
+    margin: 0;
+    background: #ddd;
+}
+.get-color .swatch {
+	width: 6rem;
+    height: 3rem;
+}
+.get-palette .swatch {
+	width: 4rem;
+    height: 2.7rem;
 }

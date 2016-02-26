@@ -318,6 +318,52 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
+    $scope.hasColor = false;
+    $scope.$watch('picFile', function(){
+    	log('picFile');
+    	var f = document.getElementById('article-img-file').files[0];
+    	var src = window.URL.createObjectURL(f);
+    	if (src){
+    		document.getElementById('preview').src = src;
+    		//耗时任务放在异步 :)
+	    	setTimeout(function(){
+	    		if (document.getElementById('preview').src){
+	    			var colorThief = new ColorThief();
+			    	var image = $('#preview')[0];
+			    	var color = colorThief.getColor(image);
+			    	log(color);
+			    	var palette = colorThief.getPalette(image);
+			    	log(palette);
+			    	log('hehe0');
+			    	//color改成RGB形式
+			    	color = 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
+			    	//colorChoices
+			    	var colorChoices = [];
+			    	for (var i=0; i<palette.length; i++){
+			    		colorChoices.push('rgb(' + palette[i][0] + ',' + palette[i][1] + ',' + palette[i][2] + ')');
+			    	}
+			    	$scope.$apply(function(){
+			    		$scope.color = color;
+				    	$scope.palette = palette;
+				    	$scope.colorChoices = colorChoices;
+				    	$scope.hasColor = true;
+			    	});
+	    		}
+	    	}, 300);
+    	}
+    });
+    // $scope.testColor = function(){
+    // 	var f = document.getElementById('article-img-file').files[0];
+    // 	var src = window.URL.createObjectURL(f);
+    // 	document.getElementById('preview').src = src;
+    // 	//耗时任务放在异步 :)
+    // 	setTimeout(function(){
+    // 		var colorThief = new ColorThief();
+	   //  	var image = $('#preview')[0];
+	   //  	var palette = colorThief.getPalette(image);
+	   //  	log(palette);
+    // 	}, 300);
+    // };
 })
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
