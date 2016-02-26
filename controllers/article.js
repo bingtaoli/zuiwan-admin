@@ -154,19 +154,25 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 	var id = $stateParams.id;
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/media/get_media"
+		url: ONLINE_MODE ?
+			 "http://115.28.75.190/zuiwan-backend/index.php/media/get_media" :
+			 "http://localhost/zuiwan-backend/index.php/media/get_media",
 	}).success(function(data){
 		$scope.medias = data;
 	});
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic"
+		url: ONLINE_MODE ?
+			 "http://115.28.75.190/zuiwan-backend/index.php/topic/get_topic" :
+			 "http://localhost/zuiwan-backend/index.php/topic/get_topic", 
 	}).success(function(data){
 		$scope.topics = data;
 	});
 	$http({
 		method: 'GET',
-		url: "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_one_article?id=" + id,
+		url: ONLINE_MODE ?
+			 "http://115.28.75.190/zuiwan-backend/index.php/article/admin_get_one_article?id=" + id :
+			 "http://localhost/zuiwan-backend/index.php/article/admin_get_one_article?id=" + id, 
 	}).success(function(data){
 		if (!data){
 			return;
@@ -205,6 +211,13 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
 		formData.append('article_color', $scope.color);
+		if (!ONLINE_MODE) {
+			log('publish article, author: ', $scope.article_author);
+			log('publish article, publisher: ', $scope.article_publisher);
+		}
+		// do not need append, they have been in formData
+		//formData.append('article_publisher', $scope.article_publisher);
+		//formData.append('article_author', $scope.article_author);
 		$.ajax({
 			type: "POST",
 			url:  ONLINE_MODE ? 
@@ -217,11 +230,18 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
             contentType: false,
             processData: false,
             timeout : 80000,  // 80s超时时间
-            success: function(){
+            success: function(json){
             	log("update success");
-            }
+            	log(json);
+            	$scope.goTop();
+                $scope.showSuccessMsg('文章修改成功');
+            },
+
 		});
 	};
+	$scope.updateImg = function(){
+		//
+	}
 }])
 
 zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout){
@@ -251,7 +271,13 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 		var content = window.editor.getData();
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
-		formData.append('article_author', "李冰涛");
+		if (!ONLINE_MODE) {
+			log('publish article, author: ', $scope.article_author);
+			log('publish article, publisher: ', $scope.article_publisher);
+		}
+		// do not need append, they have been in formData
+		//formData.append('article_publisher', $scope.article_publisher);
+		//formData.append('article_author', $scope.article_author);
 		formData.append('article_color', $scope.color);
         $.ajax({
             type: "POST",

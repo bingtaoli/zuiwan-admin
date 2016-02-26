@@ -34,6 +34,7 @@
             <tr>
                 <th>标题</th>
                 <th style="min-width: 100px;">时间</th>
+                <th style="min-width: 80px;">发布者</th>
                 <th style="min-width: 80px;">作者</th>
                 <th style="min-width: 70px;">是否推荐</th>
                 <th style="min-width: 80px;">是否首页滚动</th>
@@ -47,6 +48,7 @@
             <tr ng-repeat="article in articles track by $index">
                 <td><a ui-sref="viewArticle({id: article.id})">{{ article.article_title }}</a></td>
                 <td>{{ article.create_time }}</td>
+                <td>{{ article.article_publisher ?  article.article_publisher : '未填写' }}</td>
                 <td>{{ article.article_author }}</td>
                 <td>{{ article.is_recommend == '1' ? '是' : '否'}}</td>
                 <td>{{ article.is_banner ? '是' : '否'}}</td>

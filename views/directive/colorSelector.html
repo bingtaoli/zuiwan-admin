@@ -1,35 +1,35 @@
 <label>文章颜色(rgba选择, a(0~10)表示透明度,10表示不透明)</label>
 <div class="row" style="padding: 8px 0;">
-    <div class="col-sm-10">
+    <div class="col-sm-12">
         <div class="row">
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="col-sm-2">Red</div>
                 <div class="col-sm-9">
                     <slider id="R" ng-model="sliders.redValue" min="colorOptions.min" max="colorOptions.max">
                     </slider>        
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="col-sm-2">Green</div>
                 <div class="col-sm-9">
                     <slider id="G" ng-model="sliders.greenValue" min="colorOptions.min" max="colorOptions.max">
                     </slider>        
                 </div>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <div class="col-sm-2">Blue</div>
                 <div class="col-sm-9">
                     <slider id="B" ng-model="sliders.blueValue" min="colorOptions.min" max="colorOptions.max">
                     </slider>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="col-sm-2">
-        <div class="col-sm-2">A</div>
-        <div class="col-sm-9">
-            <slider id="A" ng-model="sliders.opacity" min="opacityOptions.min" max="opacityOptions.max">
-            </slider>
+            <div class="col-sm-3">
+                <div class="col-sm-2">A</div>
+                <div class="col-sm-9">
+                    <slider id="A" ng-model="sliders.opacity" min="opacityOptions.min" max="opacityOptions.max">
+                    </slider>
+                </div>
+            </div>
         </div>
     </div>
 </div>
