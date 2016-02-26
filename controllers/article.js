@@ -236,11 +236,33 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
             	$scope.goTop();
                 $scope.showSuccessMsg('文章修改成功');
             },
-
 		});
 	};
 	$scope.updateImg = function(){
-		//
+		var formData = new FormData($('[name="imgForm"]')[0]);
+		//id 
+		var id = $scope.article.id;
+		log(id);
+		formData.append('id', id);
+		$.ajax({
+			type: "POST",
+			url:  ONLINE_MODE ? 
+            	  ('http://115.28.75.190/zuiwan-backend/index.php/article/update_article_img') : 
+            	  ('http://localhost/zuiwan-backend/index.php/article/update_article_img'),
+			dataType: 'JSON',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout : 80000,  // 80s超时时间
+            success: function(json){
+            	log("update success");
+            	log(json);
+            	$scope.goTop();
+                $scope.showSuccessMsg('文章大图修改成功');
+            },
+		});
 	}
 }])
 
@@ -353,18 +375,6 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 	    	}, 300);
     	}
     });
-    // $scope.testColor = function(){
-    // 	var f = document.getElementById('article-img-file').files[0];
-    // 	var src = window.URL.createObjectURL(f);
-    // 	document.getElementById('preview').src = src;
-    // 	//耗时任务放在异步 :)
-    // 	setTimeout(function(){
-    // 		var colorThief = new ColorThief();
-	   //  	var image = $('#preview')[0];
-	   //  	var palette = colorThief.getPalette(image);
-	   //  	log(palette);
-    // 	}, 300);
-    // };
 })
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){
