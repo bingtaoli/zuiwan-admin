@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>专题名称</th>
+            <th>专题简介</th>
             <th>专题大图</th>
             <th>编辑</th>
         </tr>
@@ -10,6 +11,7 @@
         <tbody>
         <tr ng-repeat="topic in topics">
             <td>{{topic.topic_name}}</td>
+            <td>{{topic.topic_intro}}</td>
             <td>
                 <img height="100px" ng-src="{{topic.topic_img}}">
             </td>

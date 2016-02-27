@@ -3,6 +3,7 @@
         <thead>
         <tr>
             <th>媒体名称</th>
+            <th>媒体简介</th>
             <th>媒体头像(建议裁剪成正方形)</th>
             <th>编辑</th>
         </tr>
@@ -10,6 +11,7 @@
         <tbody>
         <tr ng-repeat="media in medias track by $index">
             <td>{{media.media_name}}</td>
+            <td>{{media.media_intro}}</td>
             <td>
                 <img style="max-width: 200px; max-height: 100px;"  ng-src="{{media.media_avatar}}">
             </td>

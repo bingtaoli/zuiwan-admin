@@ -1,4 +1,3 @@
-'use strict';
 
 zuiwanControllers.controller('TopicsCtrl', function($scope, $http, $state){
 	$http({
@@ -85,7 +84,6 @@ zuiwanControllers.controller('EditTopicCtrl', ['$scope', '$http', 'Upload', '$ti
     $scope.update = function(){
         var formData = new FormData($('[name="myForm"]')[0]);
         formData.append('id', $scope.topic.id);
-        formData.append('topic_name', $scope.topic.topic_name)
         log('update topic img: ', $scope.topic.id);
         $.ajax({
             type: "POST",

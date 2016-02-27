@@ -88,7 +88,6 @@ zuiwanControllers.controller('EditMediaCtrl', ['$scope', '$http', 'Upload', '$ti
     $scope.update = function(){
         var formData = new FormData($('[name="myForm"]')[0]);
         formData.append('id', $scope.media.id);
-        formData.append('media_name', $scope.media.media_name);
         log('update media avatar: ', $scope.media.id);
         $.ajax({
             type: "POST",
