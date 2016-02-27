@@ -9,7 +9,7 @@ function num2Array(num){
 }
 
 zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService, $state) {
-	var defaultPageNumer = 5;
+	var defaultPageNumer = 15;
 	$http({
 		method: 'GET',
 		url: ONLINE_MODE ?
