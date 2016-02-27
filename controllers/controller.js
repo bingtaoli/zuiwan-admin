@@ -186,8 +186,8 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 			return;
 		}
 		//登录token认证检测
-		if (Cookie.getCookie('zw_username')){
-			var username = Cookie.getCookie('zw_username');
+		if (Cookie.getCookie('zw_admin_username')){
+			var username = Cookie.getCookie('zw_admin_username');
 			var token = Cookie.getCookie('zw_token');
 			var data = {
 				username: username,
