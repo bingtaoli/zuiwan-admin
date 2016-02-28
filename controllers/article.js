@@ -149,8 +149,7 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 	};
  })
 
-zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout', 
-	'$stateParams', function($scope, $http, Upload, $timeout, $stateParams){
+zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeout, $stateParams, $state){
 	var id = $stateParams.id;
 	$http({
 		method: 'GET',
@@ -180,18 +179,18 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		log("article detail: ", data);
 		var article = data;
 		$scope.article = article;
-		//改变color
-		var color = article.article_color;
-		var matches;
-		if (matches = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(0\.[0-9])\)/)){
-			//符合rgba的格式
-			$scope.sliders = {
-		    	redValue: matches[1],
-		    	greenValue: matches[2],
-		    	blueValue: matches[3],
-		    	opacity: matches[4] * 10,
-		    };
-		}
+		// //改变color
+		// var color = article.article_color;
+		// var matches;
+		// if (matches = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(0\.[0-9])\)/)){
+		// 	//符合rgba的格式
+		// 	$scope.sliders = {
+		//     	redValue: matches[1],
+		//     	greenValue: matches[2],
+		//     	blueValue: matches[3],
+		//     	opacity: matches[4] * 10,
+		//     };
+		// }
 	    //防止ckeditor尚未初始化 :(
 		var timer = setInterval(function(){
 			if ($scope.editorInited){
@@ -244,6 +243,7 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 		var id = $scope.article.id;
 		log(id);
 		formData.append('id', id);
+		formData.append('article_color', $scope.color);
 		$.ajax({
 			type: "POST",
 			url:  ONLINE_MODE ? 
@@ -261,10 +261,48 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
             	log(json);
             	$scope.goTop();
                 $scope.showSuccessMsg('文章大图修改成功');
+                setTimeout(function(){
+                	$state.go('allArticles');	
+                }, 600);
+                
             },
 		});
-	}
-}])
+	};
+	$scope.$watch('picFile', function(){
+    	log('picFile');
+    	var f = document.getElementById('article-img-file').files[0];
+    	var src = window.URL.createObjectURL(f);
+    	if (src){
+    		document.getElementById('preview').src = src;
+    		//耗时任务放在异步 :)
+	    	setTimeout(function(){
+	    		if (document.getElementById('preview').src){
+	    			var colorThief = new ColorThief();
+			    	var image = $('#preview')[0];
+			    	var color = colorThief.getColor(image);
+			    	log(color);
+			    	var palette = colorThief.getPalette(image);
+			    	log(palette);
+			    	log('hehe0');
+			    	//color改成RGB形式
+			    	color = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + '0.9)';
+			    	//colorChoices
+			    	var colorChoices = [];
+			    	for (var i=0; i<palette.length; i++){
+			    		colorChoices.push('rgba(' + palette[i][0] + ',' + palette[i][1] + ',' 
+			    						   + palette[i][2] +  ',' + '0.9)');
+			    	}
+			    	$scope.$apply(function(){
+			    		$scope.color = color;
+				    	$scope.palette = palette;
+				    	$scope.colorChoices = colorChoices;
+				    	$scope.hasColor = true;
+			    	});
+	    		}
+	    	}, 300);
+    	}
+    });
+})
 
 zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout, $state){
 	$scope.load = function(){

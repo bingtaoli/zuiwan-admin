@@ -1,6 +1,6 @@
 <div ng-show="articles.length" id="all-article" style="padding: 10px; margin-bottom: 10px;" ng-show="articles">
-    <div class="row" style="margin-bottom: 8px;">
-        <div class="col-sm-3 hidden-xs" style="width: 200px;">
+    <div class="row" style="margin-bottom: 8px; padding-left: 15px;">
+        <div class="fl hidden-xs" style="width: 200px;">
             每页文章数:
             <select ng-init="numberPerPage = numberOptions[0]" ng-model="numberPerPage" 
                 ng-options="option.value for option in numberOptions"
@@ -8,7 +8,7 @@
                 style="height: 24px; width: 80px;">
             </select>
         </div>
-        <div class="col-sm-2 hidden-xs" style="width: 200px;">
+        <div class="fl hidden-xs" style="width: 200px;">
             是否推荐:
             <select ng-model="searchCondition.is_recommend" 
                     class="input-sm form-control input-s-sm inline"
@@ -18,7 +18,7 @@
                 <option value="1">是</option>
             </select>
         </div>
-        <div class="col-sm-2 hidden-xs" style="width: 300px;">
+        <div class="fl hidden-xs" style="width: 200px;">
             是否首页滚动:
             <select ng-model="searchCondition.is_banner" 
                     class="input-sm form-control input-s-sm inline"
@@ -29,43 +29,45 @@
             </select>
         </div>
     </div>
-    <table class="can-more table table-bordered table-striped" style="background: white">
-        <thead>
-            <tr>
-                <th>标题</th>
-                <th style="min-width: 100px;">时间</th>
-                <th style="min-width: 80px;">发布者</th>
-                <th style="min-width: 80px;">作者</th>
-                <th style="min-width: 70px;">是否推荐</th>
-                <th style="min-width: 80px;">是否首页滚动</th>
-                <th style="min-width: 50px;">专题</th>
-                <th>简介</th>
-                <th style="min-width: 80px;">媒体</th>
-                <th style="min-width: 80px;">编辑</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr ng-repeat="article in articles track by $index">
-                <td><a ui-sref="viewArticle({id: article.id})">{{ article.article_title }}</a></td>
-                <td>{{ article.create_time }}</td>
-                <td>{{ article.article_publisher ?  article.article_publisher : '未填写' }}</td>
-                <td>{{ article.article_author }}</td>
-                <td>{{ article.is_recommend == '1' ? '是' : '否'}}</td>
-                <td>{{ article.is_banner ? '是' : '否'}}</td>
-                <td>{{ article.article_topic_name }}</td>
-                <td>{{ article.article_intro }}</td>
-                <td>{{ article.article_media_name }}</td>
-                <td class="edit-or-del">
-                    <edit-or-del-common 
-                        del-func="delArticle(article.id, $index)" 
-                        other-place-click="otherPlaceClick()"
-                        go-edit="editArticle(article.id, $index)"                        
-                    />
-                   <!--  <edit-or-del type="Article" /> -->
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped" style="background: white">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>时间</th>
+                    <th >发布者</th>
+                    <th>作者</th>
+                    <th>是否推荐</th>
+                    <th >是否首页滚动</th>
+                    <th >专题</th>
+                    <th>简介</th>
+                    <th>媒体</th>
+                    <th>编辑</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="article in articles track by $index">
+                    <td><a ui-sref="viewArticle({id: article.id})">{{ article.article_title }}</a></td>
+                    <td>{{ article.create_time }}</td>
+                    <td>{{ article.article_publisher ?  article.article_publisher : '未填写' }}</td>
+                    <td>{{ article.article_author }}</td>
+                    <td>{{ article.is_recommend == '1' ? '是' : '否'}}</td>
+                    <td>{{ article.is_banner ? '是' : '否'}}</td>
+                    <td>{{ article.article_topic_name }}</td>
+                    <td>{{ article.article_intro }}</td>
+                    <td>{{ article.article_media_name }}</td>
+                    <td class="edit-or-del">
+                        <edit-or-del-common 
+                            del-func="delArticle(article.id, $index)" 
+                            other-place-click="otherPlaceClick()"
+                            go-edit="editArticle(article.id, $index)"                        
+                        />
+                       <!--  <edit-or-del type="Article" /> -->
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
     <div class="row">
         <div class="col-sm-6 text-left">
             <ul class="pagination" style="margin: 0">
