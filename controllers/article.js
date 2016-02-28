@@ -266,7 +266,7 @@ zuiwanControllers.controller('EditCtrl', ['$scope', '$http', 'Upload', '$timeout
 	}
 }])
 
-zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout){
+zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout, $state){
 	$scope.load = function(){
 		editor_init();
 	};
@@ -318,6 +318,7 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
                     console.log("success");
                     $scope.goTop();
                     $scope.showSuccessMsg('文章发布成功');
+                    $state.go('allArticles');
                 } else if (json.status == 'error'){
                     console.log(json.message);
                     $scope.goTop();
