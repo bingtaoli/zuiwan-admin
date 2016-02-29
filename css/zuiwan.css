@@ -103,6 +103,7 @@ footer {
 .get-palette .swatch {
 	width: 4rem;
     height: 2.7rem;
+    cursor: pointer;
 }
 .fl {
 	float: left;

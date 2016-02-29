@@ -8,6 +8,28 @@ function num2Array(num){
 	return range;
 }
 
+var COLORS = [
+	'rgba(53, 151, 53, 0.8)',
+	'rgba(255, 102, 51, 0.8)',
+	'rgba(204, 51, 102, 0.8)',
+	'rgba(51, 102, 51, 0.8)',
+	'rgba(51, 51, 153, 0.8)',
+	'rgba(51, 51, 51, 0.8)',
+	'rgba(0, 0, 0, 0.8)',
+	'rgba(0, 153, 153, 0.8)',
+	'rgba(255, 102, 102, 0.8)'
+];
+
+zuiwanControllers.controller('ColorCtrl', function($scope){
+	// 0~2
+    $scope.colorObj.color = COLORS[Math.ceil(Math.random() * COLORS.length) - 1];
+    $scope.colorObj.colorChoices = COLORS;
+    $scope.changeColor = function(index){
+    	//log(index);
+    	$scope.colorObj.color = COLORS[index];
+    }
+});
+
 zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService, $state) {
 	var defaultPageNumer = 15;
 	$http({
@@ -268,41 +290,10 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
             },
 		});
 	};
-	$scope.$watch('picFile', function(){
-    	log('picFile');
-    	var f = document.getElementById('article-img-file').files[0];
-    	var src = window.URL.createObjectURL(f);
-    	if (src){
-    		document.getElementById('preview').src = src;
-    		//耗时任务放在异步 :)
-	    	setTimeout(function(){
-	    		if (document.getElementById('preview').src){
-	    			var colorThief = new ColorThief();
-			    	var image = $('#preview')[0];
-			    	var color = colorThief.getColor(image);
-			    	log(color);
-			    	var palette = colorThief.getPalette(image);
-			    	log(palette);
-			    	log('hehe0');
-			    	//color改成RGB形式
-			    	color = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + '0.9)';
-			    	//colorChoices
-			    	var colorChoices = [];
-			    	for (var i=0; i<palette.length; i++){
-			    		colorChoices.push('rgba(' + palette[i][0] + ',' + palette[i][1] + ',' 
-			    						   + palette[i][2] +  ',' + '0.9)');
-			    	}
-			    	$scope.$apply(function(){
-			    		$scope.color = color;
-				    	$scope.palette = palette;
-				    	$scope.colorChoices = colorChoices;
-				    	$scope.hasColor = true;
-			    	});
-	    		}
-	    	}, 300);
-    	}
-    });
-})
+	$scope.colorObj = {};
+	$scope.colorObj.color = '';
+	$scope.colorObj.colorChoices = [];
+});
 
 zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout, $state){
 	$scope.load = function(){
@@ -335,10 +326,10 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 			log('publish article, author: ', $scope.article_author);
 			log('publish article, publisher: ', $scope.article_publisher);
 		}
-		// do not need append, they have been in formData
-		//formData.append('article_publisher', $scope.article_publisher);
-		//formData.append('article_author', $scope.article_author);
-		formData.append('article_color', $scope.color);
+		if (!ONLINE_MODE){
+			log('color:', $scope.colorObj.color);
+		}
+		formData.append('article_color', $scope.colorObj.color);
         $.ajax({
             type: "POST",
             url:  ONLINE_MODE ? 
@@ -379,41 +370,12 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
     	$scope.preview = false;
     	$scope.article_content = '';
     };
-    $scope.hasColor = false;
-    $scope.$watch('picFile', function(){
-    	log('picFile');
-    	var f = document.getElementById('article-img-file').files[0];
-    	var src = window.URL.createObjectURL(f);
-    	if (src){
-    		document.getElementById('preview').src = src;
-    		//耗时任务放在异步 :)
-	    	setTimeout(function(){
-	    		if (document.getElementById('preview').src){
-	    			var colorThief = new ColorThief();
-			    	var image = $('#preview')[0];
-			    	var color = colorThief.getColor(image);
-			    	log(color);
-			    	var palette = colorThief.getPalette(image);
-			    	log(palette);
-			    	log('hehe0');
-			    	//color改成RGB形式
-			    	color = 'rgba(' + color[0] + ',' + color[1] + ',' + color[2] + ',' + '0.9)';
-			    	//colorChoices
-			    	var colorChoices = [];
-			    	for (var i=0; i<palette.length; i++){
-			    		colorChoices.push('rgba(' + palette[i][0] + ',' + palette[i][1] + ',' 
-			    						   + palette[i][2] +  ',' + '0.9)');
-			    	}
-			    	$scope.$apply(function(){
-			    		$scope.color = color;
-				    	$scope.palette = palette;
-				    	$scope.colorChoices = colorChoices;
-				    	$scope.hasColor = true;
-			    	});
-	    		}
-	    	}, 300);
-    	}
-    });
+    //为了让子controller改变父controller的值，使用colorObj
+    //参见:
+    //http://www.lovelucy.info/understanding-scopes-in-angularjs.html
+    $scope.colorObj = {};
+	$scope.colorObj.color = '';
+	$scope.colorObj.colorChoices = [];
 })
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){

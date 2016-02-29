@@ -81,19 +81,20 @@
                     </div>
                 </div>
                 <div class="line line-dashed line-lg pull-in"></div>
-                <div class="article-color-section" ng-show="hasColor">
+                <div class="article-color-section" ng-controller="ColorCtrl">
                     <div class="article-color-choice">
                         <div class="get-color">
                             <label>文章颜色</label>
                             <div class="swatches">
-                                <div class="swatch" style="background-color: {{color}}"></div>
+                                <div class="swatch" style="background-color: {{colorObj.color}}"></div>
                             </div>
                         </div>
                         <div class="get-palette">
                             <label>备选颜色</label>
                             <div class="swatches">
-                                <div ng-repeat="choice in colorChoices" 
-                                     class="swatch" 
+                                <div ng-repeat="choice in colorObj.colorChoices track by $index" 
+                                     ng-click="changeColor($index)"
+                                     class="swatch"
                                      style="background-color: {{choice}}">
                                 </div>
                             </div>

@@ -1,6 +1,12 @@
 'use strict';
 
-var log = console.log.bind(console);
+if (!ONLINE_MODE){
+    var log = console.log.bind(console);
+} else {
+    var log = function(){
+        //nothing
+    }
+}
 
 var otherPlaceClick = function(){
     $('body').click();
@@ -8,7 +14,7 @@ var otherPlaceClick = function(){
 
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
-	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'oc.lazyLoad', 'ngSanitize', 'ui.bootstrap-slider',
+	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'ngSanitize',
     'auth',
 ]);
 
