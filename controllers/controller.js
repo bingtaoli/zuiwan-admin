@@ -137,12 +137,14 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
     	$scope.successHappen = false;
     }
     $scope.showSuccessMsg = function(msg){
-    	log('show success msg: ', msg)
+    	log('show success msg: ', msg);
+    	$scope.errorHappen = false;
     	$scope.successHappen = true;
     	$scope.successMsg = msg;
     };
     $scope.showErrorMsg = function(msg){
     	log('show error msg: ', msg)
+    	$scope.successHappen = false;
     	$scope.errorHappen = true;
     	$scope.errorMsg = msg;
     };

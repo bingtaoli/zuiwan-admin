@@ -233,8 +233,8 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		formData.append('article_content', content);
 		formData.append('article_color', $scope.color);
 		if (!ONLINE_MODE) {
-			log('publish article, author: ', $scope.article_author);
-			log('publish article, publisher: ', $scope.article_publisher);
+			log('publish article, author: ', $scope.article.article_author);
+			log('publish article, publisher: ', $scope.article.article_publisher);
 		}
 		// do not need append, they have been in formData
 		//formData.append('article_publisher', $scope.article_publisher);
@@ -252,10 +252,15 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
             processData: false,
             timeout : 80000,  // 80s超时时间
             success: function(json){
-            	log("update success");
             	log(json);
-            	$scope.goTop();
-                $scope.showSuccessMsg('文章修改成功');
+            	if (json.status == 'success'){
+            		log("update success");
+	            	$scope.goTop();
+	                $scope.showSuccessMsg('文章修改成功');
+            	} else if (json.status == 'error'){
+            		$scope.goTop();
+	                $scope.showErrorMsg('文章修改失败,原因: ' + json.message);
+            	}
             },
 		});
 	};
@@ -351,13 +356,13 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
                 } else if (json.status == 'error'){
                     console.log(json.message);
                     $scope.goTop();
-                    $scope.showSuccessMsg('文章发布失败,原因: ' + json.message);
+                    $scope.showErrorMsg('文章发布失败,原因: ' + json.message);
                 }
             },
             error: function (e) {
                 console.log(e);
                 $scope.goTop();
-                $scope.showSuccessMsg('文章发布失败,原因: ' + json.message);
+                $scope.showErrorMsg('文章发布失败,原因: ' + json.message);
             }
         });
     };
