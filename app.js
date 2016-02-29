@@ -1,5 +1,7 @@
 'use strict';
 
+var ONLINE_MODE = (window.location.host == '115.28.75.190' ? true : false);
+
 if (!ONLINE_MODE){
     var log = console.log.bind(console);
 } else {
@@ -17,8 +19,6 @@ var zuiwanApp = angular.module('zuiwanApp', [
 	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'ngSanitize',
     'auth',
 ]);
-
-var ONLINE_MODE = (window.location.host == '115.28.75.190' ? true : false);
 
 zuiwanApp.run(function($rootScope){
     $rootScope.$on('$stateChangeStart', function(){
