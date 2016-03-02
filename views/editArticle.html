@@ -8,64 +8,7 @@
         <section class="panel panel-default">
             <header class="panel-heading">编辑文章</header>
             <div class="panel-body">
-                <div class="form-group pull-in clearfix">
-                    <div class="col-sm-6">
-                        <label>文章标题<i ng-show="myForm.article_title.$error.required">*required</i></label>
-                        <input required name="article_title" ng-model="article.article_title" type="text" class="form-control parsley-validated" placeholder="最长30字">
-                    </div>
-                    <div class="col-sm-6">
-                        <label>文章简介<i ng-show="myForm.article_intro.$error.required">*required</i></label>
-                        <input required name="article_intro" ng-model="article.article_intro" type="text" class="form-control parsley-validated" placeholder="最长50字">
-                    </div>
-                </div>
-                <div class="line line-dashed line-lg pull-in"></div>
-                <div class="form-group pull-in clearfix">
-                    <div class="col-sm-6">
-                        <label>文章发布者<i ng-show="myForm.article_publisher.$error.required">*required</i></label>
-                        <input required name="article_publisher" ng-model="article.article_publisher" type="text" class="form-control parsley-validated" placeholder="最长20字">
-                    </div>
-                    <div class="col-sm-6">
-                        <label>文章作者<i ng-show="myForm.article_author.$error.required">*required</i></label>
-                        <input required name="article_author" ng-model="article.article_author" type="text" class="form-control parsley-validated" placeholder="最长20字">
-                    </div>
-                </div>
-                <div class="line line-dashed line-lg pull-in"></div>
-                <div class="form-group pull-in clearfix">
-                    <div class="col-sm-6">
-                        <label>是否推荐上首页</label>
-                        <select name="is_recommend" ng-model="article.is_recommend" ng-init="is_recommend='0'" class="form-control m-b">
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label>是否推荐上首页滚动栏</label>
-                        <select name="is_banner" ng-model="article.is_banner" ng-init="is_banner='0'" class="form-control m-b">
-                            <option value="0">否</option>
-                            <option value="1">是</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="line line-dashed line-lg pull-in"></div>
-                <div class="form-group pull-in clearfix">
-                    <div class="col-sm-6">
-                        <label>文章媒体<i ng-show="myForm.article_media.$error.required">*required</i></label>
-                        <select required name="article_media" ng-model="article.article_media" class="form-control m-b">
-                            <option ng-repeat="media in medias" value="{{media.id}}">{{media.media_name}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-6">
-                        <label>文章专题<i ng-show="myForm.article_topic.$error.required">*required</i></label>
-                        <select required name="article_topic" ng-model="article.article_topic" class="form-control m-b">
-                            <option>-- 请选择 --</option>
-                            <option ng-repeat="topic in topics" value="{{topic.id}}">{{topic.topic_name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="line line-dashed line-lg pull-in"></div>
-                <!-- <div>
-                    <color-selector/>
-                </div> -->
+                <div ng-include="'views/partial/article_form.html'"></div>
                 <div class="line line-dashed line-lg pull-in"></div>
                 <div class="form-group" style="padding-left: 15px; padding-right: 15px;">
                     <textarea id="rich-editor" class="form-control parsley-validated" rows="8"></textarea>

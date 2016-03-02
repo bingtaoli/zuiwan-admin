@@ -232,10 +232,6 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
 		formData.append('article_color', $scope.color);
-		if (!ONLINE_MODE) {
-			log('publish article, author: ', $scope.article.article_author);
-			log('publish article, publisher: ', $scope.article.article_publisher);
-		}
 		// do not need append, they have been in formData
 		//formData.append('article_publisher', $scope.article_publisher);
 		//formData.append('article_author', $scope.article_author);
@@ -328,10 +324,6 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 		var content = window.editor.getData();
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
-		if (!ONLINE_MODE) {
-			log('publish article, author: ', $scope.article_author);
-			log('publish article, publisher: ', $scope.article_publisher);
-		}
 		if (!ONLINE_MODE){
 			log('color:', $scope.colorObj.color);
 		}
@@ -375,6 +367,11 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
     $scope.quitPreview = function(){
     	$scope.preview = false;
     	$scope.article_content = '';
+    };
+    //默认推荐
+    $scope.article = {
+    	is_recommend: '1',
+    	is_banner: '0'
     };
     //为了让子controller改变父controller的值，使用colorObj
     //参见:
