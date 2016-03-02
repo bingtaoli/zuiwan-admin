@@ -62,32 +62,6 @@ footer {
 	max-width: 100% !important;
 }
 
-/*#RGB {
-	height: 20px;
-	background: rgb(128, 128, 128);
-}
-#R .slider-selection {
-	background: #FF8282;
-}
-#R .slider-handle {
-	background: red;
-}
-#G .slider-selection {
-	background: #428041;
-}
-#G .slider-handle {
-	background: green;
-}
-#B .slider-selection {
-	background: #8283FF;
-}
-#B .slider-handle {
-	border-bottom-color: blue;
-}*/
-
-/*.article-color-choice {
-	text-align: center;
-}*/
 .article-color-choice h3 {
 	font-size: 20px;
 }
