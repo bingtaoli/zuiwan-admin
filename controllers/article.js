@@ -270,7 +270,8 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		var id = $scope.article.id;
 		log(id);
 		formData.append('id', id);
-		formData.append('article_color', $scope.color);
+		//todo 没有颜色直接返回
+		formData.append('article_color', $scope.colorObj.color);
 		$.ajax({
 			type: "POST",
 			url:  ONLINE_MODE ? 
