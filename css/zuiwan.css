@@ -82,3 +82,6 @@ footer {
 .fl {
 	float: left;
 }
+a#top {
+	margin-top: 10px;
+}
