@@ -231,7 +231,8 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
-		formData.append('article_color', $scope.color);
+		//加颜色个毛啊，导致了bug，头晕
+		//formData.append('article_color', $scope.color);
 		// do not need append, they have been in formData
 		//formData.append('article_publisher', $scope.article_publisher);
 		//formData.append('article_author', $scope.article_author);
