@@ -88,3 +88,13 @@ a#top {
 td {
 	word-break: break-all !important;
 }
+#preview-page {
+	width: 365px;
+}
+#preview-content {
+	text-align: center;
+}
+#preview-content p {
+	word-break: break-all;
+	text-align: justify;
+}
