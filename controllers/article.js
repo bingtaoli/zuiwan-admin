@@ -375,7 +375,7 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
         });
     };
     $scope.toPreview = function(){
-    	var content = window.editor.getData();
+    	var content = $scope.getUeditorContent();
     	$scope.article_content = content;
 		$scope.preview = true;
     }
