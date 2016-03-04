@@ -152,6 +152,15 @@ zuiwanControllers.controller('BaseCtrl', function($scope, AuthService, $state, $
 		$location.hash('top');
 		$anchorScroll();
 	};
+	$scope.showMaxLength = function(str, length){
+		if (!str){
+			return '无';
+		}
+		if (str && str.length > length){
+			return str.substr(0, length) + '...' ;
+		}
+		return str;
+	}
 
 	var loginUrl; // login url
 	var logoutUrl;
