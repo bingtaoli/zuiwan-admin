@@ -95,6 +95,8 @@ zuiwanControllers.controller('ArticlesCtrl', function($scope, $http, AuthService
 		}).success(function(data){
 			$scope.articles = data.articles;
 			$scope.article_count = data.count;
+			$scope.recommend_count = data.recommend_count;
+			$scope.banner_count = data.banner_count;
 		});
 	});
 	$scope.$watch("currentPage", function(){
@@ -201,32 +203,44 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		log("article detail: ", data);
 		var article = data;
 		$scope.article = article;
-		// //改变color
-		// var color = article.article_color;
-		// var matches;
-		// if (matches = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*(0\.[0-9])\)/)){
-		// 	//符合rgba的格式
-		// 	$scope.sliders = {
-		//     	redValue: matches[1],
-		//     	greenValue: matches[2],
-		//     	blueValue: matches[3],
-		//     	opacity: matches[4] * 10,
-		//     };
-		// }
-	    //防止ckeditor尚未初始化 :(
+	    //防止editor尚未初始化
+	    var times = 1;
 		var timer = setInterval(function(){
 			if ($scope.editorInited){
-				window.editor.setData(article.article_content);
+				log('set editor2 data');
+				window.ue2.setContent(article.article_content);
+				clearInterval(timer);
+			}
+			if (times > 10){
+				//防止无限循环
 				clearInterval(timer);
 			}
 		}, 100);
 	});
 	$scope.load = function(){
-		editor_init();
-		$scope.editorInited = true;
+		//editor_init();
+		var ueditorInit = function(){
+			//实例化编辑器
+		    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+		    window.ue2 = UE.getEditor('editor2', {
+		    	initialFrameWidth: $('#form')[0].offsetWidth - 30,
+		    	autoSyncData: false
+		    });
+		    log('width:', $('#form')[0].offsetWidth - 30);
+		    ue2.ready(function() {
+			    $scope.$apply(function(){
+			    	$scope.editorInited = true;
+			    })
+			});
+		};
+		ueditorInit();
+	};
+	$scope.getUeditorContent = function(){
+		log(UE.getEditor('editor2').getContent());
+		return UE.getEditor('editor2').getContent();
 	};
 	$scope.updateArticle = function(){
-		var content = window.editor.getData();
+		var content = $scope.getUeditorContent();
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
@@ -300,7 +314,7 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 
 zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout, $state){
 	$scope.load = function(){
-		editor_init();
+		//editor_init();
 	};
 	$scope.article_img_preview_show = false;
 	$http({
@@ -322,7 +336,7 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 	$scope.preview = false;
 
 	$scope.publish = function(){
-		var content = window.editor.getData();
+		var content = $scope.getUeditorContent();
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
 		if (!ONLINE_MODE){
@@ -380,6 +394,20 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
     $scope.colorObj = {};
 	$scope.colorObj.color = '';
 	$scope.colorObj.colorChoices = [];
+	var ueditorInit = function(){
+		//实例化编辑器
+	    //建议使用工厂方法getEditor创建和引用编辑器实例，如果在某个闭包下引用该编辑器，直接调用UE.getEditor('editor')就能拿到相关的实例
+	    var ue = UE.getEditor('editor', {
+	    	initialFrameWidth: $('#form')[0].offsetWidth - 30,
+	    	autoSyncData: false
+	    });
+	    log('width:', $('#form')[0].offsetWidth - 30);
+	};
+	$scope.getUeditorContent = function(){
+		log(UE.getEditor('editor').getContent());
+		return UE.getEditor('editor').getContent();
+	};
+	ueditorInit();
 })
 
 zuiwanControllers.controller("ViewArticle", ['$scope', '$stateParams', '$http', function($scope, $stateParams, $http){

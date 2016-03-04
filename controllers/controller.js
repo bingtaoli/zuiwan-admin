@@ -1,19 +1,5 @@
 'use strict';
 
-function editor_init(){
-	//适配editor宽度
-	var editorWidth = $('form').offsetWidth - 30;
-    var config = {
-        'toolbar': [['Bold', 'Italic', 'Strike', 'Format', 'NumberedList', 'BulletedList', 'Image', 'PasteFromWord',
-            'Table', 'HorizontalRule', 'SpecialChar', 'Undo', 'Redo', 'Maximize']],
-        'uiColor': '#FAFAFA',
-        'removePlugins': 'elementspath',
-        'width': editorWidth,
-        'height': 450
-    };
-    window.editor = CKEDITOR.replace('rich-editor', config);
-}
-
 var zuiwanControllers = angular.module('zuiwanControllers', ['storage']);
 
 zuiwanControllers.controller('VisitCtrl', ['$scope', '$http', '$state', function ($scope, $http, $state) {

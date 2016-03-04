@@ -28,6 +28,10 @@
                 <option value="1">是</option>
             </select>
         </div>
+        <div class="fl" style="width: 244px;">
+            <span style="line-height: 24px; padding-right: 10px;">现在推荐文章数目: {{recommend_count}}</span>
+            <span style="line-height: 24px;">现在滚动文章数目: {{banner_count}}</span>
+        </div>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped" style="background: white">
@@ -42,7 +46,7 @@
                     <th >专题</th>
                     <th>简介</th>
                     <th>媒体</th>
-                    <th style="min-width: 40px;">编辑</th>
+                    <th>编辑</th>
                 </tr>
             </thead>
             <tbody>
@@ -63,7 +67,7 @@
                     <td>{{ article.article_topic_name }}</td>
                     <td style="max-width: 220px;">{{ showMaxLength(article.article_intro, 50) }}</td>
                     <td>{{ article.article_media_name }}</td>
-                    <td class="edit-or-del">
+                    <td class="edit-or-del" style="min-width: 70px;">
                         <edit-or-del-common 
                             del-func="delArticle(article.id, $index)" 
                             other-place-click="otherPlaceClick()"
