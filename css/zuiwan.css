@@ -85,3 +85,6 @@ footer {
 a#top {
 	margin-top: 10px;
 }
+td {
+	word-break: break-all !important;
+}
