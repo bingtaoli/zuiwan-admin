@@ -17,14 +17,8 @@ var otherPlaceClick = function(){
 //依赖于FileUpload插件
 var zuiwanApp = angular.module('zuiwanApp', [
 	'zuiwanControllers', 'ngFileUpload', 'ui.router', 'ngSanitize',
-    'auth',
+    'auth', 'ng.ueditor'
 ]);
-
-zuiwanApp.run(function($rootScope){
-    $rootScope.$on('$stateChangeStart', function(){
-        //log('change');
-    })
-});
 
 // zuiwanApp.directive('editOrDel', function(){
 //     return {

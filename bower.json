@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "angular-bootstrap-slider": "~0.1.23",
-    "seiyria-bootstrap-slider": "~6.0.8"
+    "seiyria-bootstrap-slider": "~6.0.8",
+    "angular-ueditor": "*"
   }
 }

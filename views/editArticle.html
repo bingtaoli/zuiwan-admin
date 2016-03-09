@@ -2,7 +2,7 @@
 <div>
     <success-fail-msg />
 </div>
-<div id="edit" data-ng-init="load()">
+<div id="edit">
     <a ui-sref="allArticles" class="back">&lt;&lt;返回所有文章</a>
     <form id="form" class="form-horizontal" name="myForm">
         <section class="panel panel-default">
@@ -10,7 +10,7 @@
             <div class="panel-body">
                 <div ng-include="'views/partial/article_form.html'"></div>
                 <div class="line line-dashed line-lg pull-in"></div>
-                <script id="editor2" type="text/plain" style="width:800px;height:500px;"></script>
+                <div class="ueditor" ng-model="content" config="_simpleConfig"></div>
             </div>
             <footer class="panel-footer text-right bg-light lter">
                 <button class="btn btn-success btn-s-xs"
