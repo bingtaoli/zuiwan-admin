@@ -212,7 +212,8 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
     $scope.content = "稍等片刻...";
     $scope._simpleConfig = {
     	initialFrameWidth: $('#form')[0].offsetWidth - 30,
-    	initialFrameHeight: editorHeight
+    	initialFrameHeight: editorHeight,
+    	autoFloatEnabled: false
     };
 	$scope.updateArticle = function(){
 		var formData = new FormData($('[name="myForm"]')[0]);
@@ -339,6 +340,7 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
         });
     };
     $scope.toPreview = function(){
+    	log($scope.content);
     	$scope.article_content = $scope.content;
 		$scope.preview = true;
     }
@@ -361,7 +363,8 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 	$scope.content = "";
     $scope._simpleConfig = {
     	initialFrameWidth: $('#form')[0].offsetWidth - 30,
-    	initialFrameHeight: editorHeight
+    	initialFrameHeight: editorHeight,
+    	autoFloatEnabled: false
     };
 })
 
