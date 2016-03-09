@@ -2,7 +2,7 @@
 <div>
     <success-fail-msg />
 </div>
-<div id="publish" data-ng-init="load()" ng-class="{true: 'active'}[preview]">
+<div id="publish" ng-class="{true: 'active'}[preview]">
     <form id="form" class="form-horizontal" name="myForm">
         <section class="panel panel-default">
             <header class="panel-heading">发布文章</header>
@@ -27,31 +27,6 @@
                     </div>
                 </div>
                 <div class="line line-dashed line-lg pull-in"></div>
-                <div class="article-color-section" ng-controller="ColorCtrl">
-                    <div class="article-color-choice">
-                        <div class="get-color">
-                            <label>文章颜色</label>
-                            <div class="swatches">
-                                <div class="swatch" style="background-color: {{colorObj.color}}"></div>
-                            </div>
-                        </div>
-                        <div class="get-palette">
-                            <label>备选颜色</label>
-                            <div class="swatches">
-                                <div ng-repeat="choice in colorObj.colorChoices track by $index" 
-                                     ng-click="changeColor($index)"
-                                     class="swatch"
-                                     style="background-color: {{choice}}">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="line line-dashed line-lg pull-in"></div>
-                <!-- <div class="form-group" style="padding-left: 15px; padding-right: 15px;">
-                    <textarea id="rich-editor" class="form-control parsley-validated" rows="8"></textarea>
-                </div> -->
-                <!-- ueditor -->
                 <script id="editor" type="text/plain" style="width:800px;height:500px;"></script>
             </div>
             <footer class="panel-footer text-right bg-light lter">

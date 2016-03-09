@@ -8,17 +8,19 @@ function num2Array(num){
 	return range;
 }
 
-var COLORS = [
-	'rgba(53, 151, 53, 0.8)',
-	'rgba(255, 102, 51, 0.8)',
-	'rgba(204, 51, 102, 0.8)',
-	'rgba(51, 102, 51, 0.8)',
-	'rgba(51, 51, 153, 0.8)',
-	'rgba(51, 51, 51, 0.8)',
-	'rgba(0, 0, 0, 0.8)',
-	'rgba(0, 153, 153, 0.8)',
-	'rgba(255, 102, 102, 0.8)'
+var opacity = 0.89;
+var colorStr = [
+	'51, 51, 102',
+	'102, 51, 102',
+	'0, 153, 153',
+	'51, 102, 102',
+	'204, 102, 102',
+	'51, 51, 51'
 ];
+var COLORS = [];
+for (var i = 0; i < colorStr.length; i++){
+	COLORS.push('rgba(' + colorStr[i] + ',' + opacity + ')');
+}
 
 zuiwanControllers.controller('ColorCtrl', function($scope){
 	// 0~2
@@ -245,11 +247,7 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', content);
-		//加颜色个毛啊，导致了bug，头晕
-		//formData.append('article_color', $scope.color);
-		// do not need append, they have been in formData
-		//formData.append('article_publisher', $scope.article_publisher);
-		//formData.append('article_author', $scope.article_author);
+		formData.append('article_color', $scope.colorObj.color);
 		$.ajax({
 			type: "POST",
 			url:  ONLINE_MODE ? 
@@ -313,9 +311,6 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
 });
 
 zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $timeout, $state){
-	$scope.load = function(){
-		//editor_init();
-	};
 	$scope.article_img_preview_show = false;
 	$http({
 		method: 'GET',
@@ -339,9 +334,7 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 		var content = $scope.getUeditorContent();
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', content);
-		if (!ONLINE_MODE){
-			log('color:', $scope.colorObj.color);
-		}
+		log('color:', $scope.colorObj.color);
 		formData.append('article_color', $scope.colorObj.color);
         $.ajax({
             type: "POST",
