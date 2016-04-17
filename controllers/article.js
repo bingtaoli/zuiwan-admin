@@ -213,14 +213,15 @@ zuiwanControllers.controller('EditCtrl', function($scope, $http, Upload, $timeou
     $scope._simpleConfig = {
     	initialFrameWidth: $('#form')[0].offsetWidth - 30,
     	initialFrameHeight: editorHeight,
-    	autoFloatEnabled: false
+    	autoFloatEnabled: false,
+    	
     };
 	$scope.updateArticle = function(){
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append("is_update", 1);
 		formData.append('id', $scope.article.id);
 		formData.append('article_content', $scope.content);
-		formData.append('article_color', $scope.colorObj.color);
+		//formData.append('article_color', $scope.colorObj.color);
 		$.ajax({
 			type: "POST",
 			url:  ONLINE_MODE ? 
@@ -306,8 +307,8 @@ zuiwanControllers.controller('PublishCtrl', function($scope, $http, Upload, $tim
 	$scope.publish = function(){
 		var formData = new FormData($('[name="myForm"]')[0]);
 		formData.append('article_content', $scope.content);
-		log('color:', $scope.colorObj.color);
-		formData.append('article_color', $scope.colorObj.color);
+		// log('color:', $scope.colorObj.color);
+		// formData.append('article_color', $scope.colorObj.color);
         $.ajax({
             type: "POST",
             url:  ONLINE_MODE ? 
